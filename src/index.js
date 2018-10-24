@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import Todo from './Todo.js';
+import List from './List.js';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(<Todo />, document.getElementById('root'));

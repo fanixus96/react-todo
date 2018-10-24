@@ -1,47 +1,34 @@
 import React, { Component } from 'react';
-import './App.css';
+import List from './List.js';
 
 class Todo extends Component {
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      todos: [{id:1, value:"pierwszy"},{id:2, value:"drugi"},{id:3, value:"trzeci"},{id:4, value:"czwarty"}],
-    };
-  };
-
-
   createEvent() {
 
-    var newElement = document.getElementById("taskInput").value;
+    var newValue = document.getElementById("taskInput").value;
+    var newElement = {id:5, value:newValue}
     var newTodos = this.state.todos.slice(0);
-    newTodos.push({id:5, value:newElement});
-    this.setState({
+    newTodos.push(newElement);
+    this.props.List.setState({
       todos: newTodos
     });
-     console.log(this.state.todos)
+     console.log(newElement.id)
   };
 
   editEvent() {
-
+    console.log("edited")
   };
 
-  deleteEvent() {
+  deleteEvent(element) {
+    var doneElement = this.todos.indexOf(this.state.element.id);
 
+    console.log(doneElement)
   };
 
   render() {
     return (
       <div>
-        <ul>
-          {this.state.todos.map(function(element){
-                    return <li key={element.value}>{element.value}</li>;
-
-                  })}
-        </ul>
-        <input id="taskInput" placeholder="create task"/>
-        <button onClick={this.createEvent.bind(this)}>New Task</button>
+        <li>{this.props.item.value}</li>
       </div>
     );
   }
