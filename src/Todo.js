@@ -4,15 +4,15 @@ import List from './List.js';
 class Todo extends Component {
 
   createEvent() {
-
     var newValue = document.getElementById("taskInput").value;
     var newElement = {id:5, value:newValue}
     var newTodos = this.state.todos.slice(0);
     newTodos.push(newElement);
     this.props.List.setState({
-      todos: newTodos
+      todos: newTodos,
     });
-     console.log(newElement.id)
+
+    console.log(newElement.id)
   };
 
   editEvent() {
