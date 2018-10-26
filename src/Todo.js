@@ -8,7 +8,7 @@ class Todo extends Component {
   };
 
   deleteEvent() {
-     var items = this.parent.state.todos;
+     var items = this.props.parent.state.todos;
     //var idx = 
     //var idx = items.value.indexOf(function(currentItem){
      // return this.items.id == currentItem.id;

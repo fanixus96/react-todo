@@ -23,10 +23,12 @@ class List extends Component {
   }
 
   render() {
+    var self = this;
+
     return (
       <div>
       {this.state.todos.map(function(item) {
-        return <Todo parent={this} item={item} />;
+        return <Todo parent={self} item={item} />;
       })}
       	<input id="tvalue"/>
       	<button onClick={this.createTodo.bind(this)}> Create </button>
