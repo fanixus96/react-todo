@@ -11,12 +11,25 @@ class List extends Component {
     };
   }
 
+  createTodo() {
+  	var itemValue = document.getElementById("tvalue").value;
+  	var newTodos = this.state.todos.slice(0);
+  	newTodos.push({id:6, value:itemValue});
+  	this.setState({
+      todos: newTodos
+    });
+  	  	console.log(this.state.todos)
+  	document.getElementById("tvalue").value = "";
+  }
+
   render() {
     return (
       <div>
       {this.state.todos.map(function(item) {
         return <Todo parent={this} item={item} />;
       })}
+      	<input id="tvalue"/>
+      	<button onClick={this.createTodo.bind(this)}> Create </button>
       </div>
     );
   }

@@ -3,32 +3,32 @@ import List from './List.js';
 
 class Todo extends Component {
 
-  createEvent() {
-    var newValue = document.getElementById("taskInput").value;
-    var newElement = {id:5, value:newValue}
-    var newTodos = this.state.todos.slice(0);
-    newTodos.push(newElement);
-    this.props.List.setState({
-      todos: newTodos,
-    });
-
-    console.log(newElement.id)
-  };
-
   editEvent() {
     console.log("edited")
   };
 
-  deleteEvent(element) {
-    var doneElement = this.todos.indexOf(this.state.element.id);
+  deleteEvent() {
+     var items = this.parent.state.todos;
+    //var idx = 
+    //var idx = items.value.indexOf(function(currentItem){
+     // return this.items.id == currentItem.id;
+   // });
 
-    console.log(doneElement)
+    //var reducedItems= this.items.splice(idx,1)
+
+    //this.props.setState({
+     // items: reducedItems
+    //});
+    
+
+    //console.log(idx)
+    console.log(items)
   };
 
   render() {
     return (
       <div>
-        <li>{this.props.item.value}</li>
+        <li onClick={this.deleteEvent.bind(this)}>{this.props.item.value} </li>
       </div>
     );
   }
