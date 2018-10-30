@@ -14,7 +14,7 @@ class List extends Component {
   createTodo() {
   	var itemValue = document.getElementById("tvalue").value;
   	var newTodos = this.state.todos.slice(0);
-  	newTodos.push({id:6, value:itemValue});
+  	newTodos.push({id:6, value:itemValue, done:false});
   	this.setState({
       todos: newTodos
     });

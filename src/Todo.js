@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Popup from "reactjs-popup";
+import './main.css';
 
 class Todo extends Component {
 
@@ -7,7 +8,8 @@ class Todo extends Component {
     super(props);
 
     this.state = {
-       open: false
+       open: false,
+       status:"notDone"
     };
   }
 
@@ -23,6 +25,7 @@ class Todo extends Component {
     this.props.parent.setState({
       todos: items
     });
+    
 
   }
   
@@ -37,10 +40,16 @@ class Todo extends Component {
     });
   };
 
+  eventDone() {
+    this.setState({
+      status: "done"
+    });
+  };
+
   render() {
     return (
-      <div>
-        <li >
+      <div className="container">
+        <li className={this.state.status} onClick={this.eventDone.bind(this)}>
           <Popup open={this.state.open}>
             <div>
               <input type="text" id="item-edit" defaultValue={this.props.item.value} onChange={this.editEvent.bind(this)}/>
