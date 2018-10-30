@@ -7,7 +7,7 @@ class List extends Component {
     super(props);
 
     this.state = {
-      todos: [{id:1, value:"pierwszy"},{id:2, value:"drugi"},{id:3, value:"trzeci"},{id:4, value:"czwarty"}],
+      todos: [{id:1, value:"pierwszy", done:false},{id:2, value:"drugi", done:false},{id:3, value:"trzeci", done:false},{id:4, value:"czwarty", done:false}],
     };
   }
 
@@ -18,7 +18,6 @@ class List extends Component {
   	this.setState({
       todos: newTodos
     });
-  	  	console.log(this.state.todos)
   	document.getElementById("tvalue").value = "";
   }
 
