@@ -7,14 +7,14 @@ class List extends Component {
     super(props);
 
     this.state = {
-      todos: [{id:1, value:"pierwszy", done:false},{id:2, value:"drugi", done:false},{id:3, value:"trzeci", done:false},{id:4, value:"czwarty", done:false}],
+      todos: [{id:1, value:"pierwszy", status: "notDone"},{id:2, value:"drugi", status: "notDone"},{id:3, value:"trzeci", status: "notDone"},{id:4, value:"czwarty", status: "notDone"}],
     };
   }
 
   createTodo() {
   	var itemValue = document.getElementById("tvalue").value;
   	var newTodos = this.state.todos.slice(0);
-  	newTodos.push({id:6, value:itemValue, done:false});
+  	newTodos.push({id:6, value:itemValue, status:"notDone"});
   	this.setState({
       todos: newTodos
     });

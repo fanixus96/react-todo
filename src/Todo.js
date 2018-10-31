@@ -9,7 +9,6 @@ class Todo extends Component {
 
     this.state = {
        open: false,
-       status:"notDone"
     };
   }
 
@@ -17,9 +16,14 @@ class Todo extends Component {
     this.setState({ open: true })
   }
   closeAlert() {
+    var items = this.props.parent.state.todos;
+    var idx = items.indexOf(this.props.item);
+    items[idx].status="notDone";
+    this.props.parent.setState({
+      todos: items
+    });
     this.setState({ 
       open: false,
-      status: "notDone" 
     })
   }
 
@@ -28,11 +32,11 @@ class Todo extends Component {
     var newValue = document.getElementById("item-edit").value;
     var idx = items.indexOf(this.props.item)
     items[idx].value=newValue;
+    items[idx].status="notDone";
     this.props.parent.setState({
       todos: items
     });
     this.setState({
-      status: "notDone",
       open: false
     });
 
@@ -50,15 +54,21 @@ class Todo extends Component {
   };
 
   eventDone() {
-    this.setState({
-      status: "done"
+   var items = this.props.parent.state.todos;
+   var idx = items.indexOf(this.props.item)
+   if (idx!=-1){
+        items[idx].status="done";
+      }
+    
+    this.props.parent.setState({
+      todos: items
     });
   };
 
   render() {
     return (
       <div className="container">
-        <li className={this.state.status} onClick={this.eventDone.bind(this)}>
+        <li className={this.props.item.status} onClick={this.eventDone.bind(this)}>
           <Popup open={this.state.open}>
             <div>
               <input type="text" id="item-edit" defaultValue={this.props.item.value}/>
