@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Popup from "reactjs-popup";
+import TaskCalendar from './TaskCalendar.js';
 import './main.css';
 
 class Todo extends Component {
@@ -15,6 +16,7 @@ class Todo extends Component {
   openAlert() {
     this.setState({ open: true })
   }
+  
   closeAlert() {
     var items = this.props.parent.state.todos;
     var idx = items.indexOf(this.props.item);
@@ -31,7 +33,7 @@ class Todo extends Component {
     var items = this.props.parent.state.todos;
     var newValue = document.getElementById("item-edit").value;
     var idx = items.indexOf(this.props.item)
-    items[idx].value=newValue;
+    items[idx].title=newValue;
     items[idx].status="notDone";
     this.props.parent.setState({
       todos: items
@@ -71,12 +73,12 @@ class Todo extends Component {
         <li className={this.props.item.status} onClick={this.eventDone.bind(this)}>
           <Popup open={this.state.open}>
             <div>
-              <input type="text" id="item-edit" defaultValue={this.props.item.value}/>
+              <input type="text" id="item-edit" defaultValue={this.props.item.title}/>
               <button onClick={this.editEvent.bind(this)}>Save</button>
               <button onClick={this.closeAlert.bind(this)}>Cancel</button>
             </div>
           </Popup>
-          {this.props.item.value}
+          {this.props.item.title}
           <button onClick={this.openAlert.bind(this)}>Edit</button> 
           <button onClick={this.deleteEvent.bind(this)}>Delete</button> 
         </li>

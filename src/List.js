@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import Todo from './Todo.js';
+import Popup from "reactjs-popup";
+import DatePicker from 'react-datepicker';
+import moment from 'moment';
 import TaskCalendar from './TaskCalendar.js';
 import { Grid, Row, Col, Container } from 'reactstrap';
 
@@ -10,23 +13,43 @@ class List extends Component {
 
     this.state = {
       todos: [
-      {id:1, value:"pierwszy", status: "notDone"},
-      {id:2, value:"drugi", status: "notDone"},
-      {id:3, value:"trzeci", status: "notDone"},
-      {id:4, value:"czwarty", status: "notDone"}
+      { title:"pierwszy", status: "notDone", start: '2018-11-02'},
+      { title:"drugi", status: "notDone", start: '2018-11-03'},
+      { title:"trzeci", status: "notDone", start: '2018-11-04'},
+      { title:"czwarty", status: "notDone", start: '2018-11-05'}
       ],
+      open: false,
+      startDate: moment()
     };
+  }
+
+  openAlert() {
+    this.setState({ 
+      open: true 
+    })
+  }
+
+  dateChange(date){
+    this.setState({
+      startDate: date
+    });
+    console.log(this.state.startDate)
   }
 
   createTodo() {
   	var itemValue = document.getElementById("tvalue").value;
   	var newTodos = this.state.todos.slice(0);
-  	newTodos.push({id:6, value:itemValue, status:"notDone"});
+  	newTodos.push({id:6, title:itemValue, status:"notDone", start:this.state.startDate});
   	this.setState({
       todos: newTodos
     });
-  	document.getElementById("tvalue").value = "";
+  	document.getElementById("tvalue").title = "";
+     this.setState({ 
+      open: false
+    })
+    console.log(newTodos)
   }
+
 
   render() {
     var self = this;
@@ -34,17 +57,25 @@ class List extends Component {
     return (
       <Container>
       <Row>
-      <Col>
-      {this.state.todos.map(function(item) {
-        return <Todo parent={self} item={item} />;
-      })}
-      	<input id="tvalue"/>
-      	<button onClick={this.createTodo.bind(this)}> Create </button>
-        </Col>
         <Col>
-        <TaskCalendar/>
-        </Col>
+        {this.state.todos.map(function(item) {
+          return <Todo parent={self} item={item} />;
+        })}
+        <Popup open={this.state.open}>
+        	<input id="tvalue"/>
+          <DatePicker
+            dateFormat="YYYY-MM-DD"
+            selected={this.state.startDate}
+            onChange={this.dateChange.bind(this)}
+          />
+          <button onClick={this.createTodo.bind(this)}> Create </button>
+          </Popup>
+        	<button onClick={this.openAlert.bind(this)}> New </button>
+          </Col>
+          <Col>
+          </Col>
         </Row>
+        <TaskCalendar events={this.state.todos}/>
       </Container>
     );
   }
