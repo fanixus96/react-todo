@@ -17,7 +17,7 @@ class TaskCalendar extends Component {
 	render() {
       return (
       	<FullCalendar
-      		aspectRatio={4}
+      		
       		events={this.props.events}
       	/>
       );

@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import 'fullcalendar-reactwrapper/dist/css/fullcalendar.min.css';
 import 'react-datepicker/dist/react-datepicker.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 import List from './List.js';
 import * as serviceWorker from './serviceWorker';

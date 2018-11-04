@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Popup from "reactjs-popup";
-import TaskCalendar from './TaskCalendar.js';
+import TaskCalendar from './TaskCalendar.js'
+import { ListGroup, ListGroupItem, Button } from 'reactstrap';
 import './main.css';
 
 class Todo extends Component {
@@ -20,7 +21,7 @@ class Todo extends Component {
   closeAlert() {
     var items = this.props.parent.state.todos;
     var idx = items.indexOf(this.props.item);
-    items[idx].status="notDone";
+    items[idx].color="info";
     this.props.parent.setState({
       todos: items
     });
@@ -34,7 +35,7 @@ class Todo extends Component {
     var newValue = document.getElementById("item-edit").value;
     var idx = items.indexOf(this.props.item)
     items[idx].title=newValue;
-    items[idx].status="notDone";
+    items[idx].color="info";
     this.props.parent.setState({
       todos: items
     });
@@ -59,7 +60,7 @@ class Todo extends Component {
    var items = this.props.parent.state.todos;
    var idx = items.indexOf(this.props.item)
    if (idx!=-1){
-        items[idx].status="done";
+        items[idx].color="warning";
       }
     
     this.props.parent.setState({
@@ -70,7 +71,7 @@ class Todo extends Component {
   render() {
     return (
       <div className="container">
-        <li className={this.props.item.status} onClick={this.eventDone.bind(this)}>
+        <ListGroup  onClick={this.eventDone.bind(this)}>
           <Popup open={this.state.open}>
             <div>
               <input type="text" id="item-edit" defaultValue={this.props.item.title}/>
@@ -78,10 +79,10 @@ class Todo extends Component {
               <button onClick={this.closeAlert.bind(this)}>Cancel</button>
             </div>
           </Popup>
-          {this.props.item.title}
-          <button onClick={this.openAlert.bind(this)}>Edit</button> 
-          <button onClick={this.deleteEvent.bind(this)}>Delete</button> 
-        </li>
+          <ListGroupItem  color={this.props.item.color}>{this.props.item.title}</ListGroupItem>
+          <Button color="primary" onClick={this.openAlert.bind(this)} block>Edit</Button> 
+          <Button color="secondary" onClick={this.deleteEvent.bind(this)} block>Delete</Button> 
+        </ListGroup>
       </div>
       
     );
