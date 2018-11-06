@@ -71,15 +71,15 @@ class Todo extends Component {
   render() {
     return (
       <div className="container">
-        <ListGroup>
-          <Popup open={this.state.open}>
+        <ListGroup  onClick={this.eventDone.bind(this)}>
+          <Popup open={this.state.open} closeOnDocumentClick={false}>
             <div>
               <input type="text" id="item-edit" defaultValue={this.props.item.title}/>
               <button onClick={this.editEvent.bind(this)}>Save</button>
               <button onClick={this.closeAlert.bind(this)}>Cancel</button>
             </div>
           </Popup>
-          <ListGroupItem  onClick={this.eventDone.bind(this)} color={this.props.item.color}>{this.props.item.title}</ListGroupItem>
+          <ListGroupItem  color={this.props.item.color}>{this.props.item.title}</ListGroupItem>
           <Button color="primary" onClick={this.openAlert.bind(this)} block>Edit</Button>
           <Button color="secondary" onClick={this.deleteEvent.bind(this)} block>Delete</Button>
         </ListGroup>
