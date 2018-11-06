@@ -24,8 +24,8 @@ class List extends Component {
   }
 
   openAlert() {
-    this.setState({ 
-      open: true 
+    this.setState({
+      open: true
     })
   }
 
@@ -33,25 +33,23 @@ class List extends Component {
     this.setState({
       startDate: date
     });
-    console.log(this.state.startDate)
   }
 
   createTodo() {
-  	var itemValue = document.getElementById("tvalue").value;
-  	var newTodos = this.state.todos.slice(0);
-  	newTodos.push({id:6, title:itemValue, color:"info", start:this.state.startDate});
-  	this.setState({
+    var itemValue = document.getElementById("tvalue").value;
+    var newTodos = this.state.todos.slice(0);
+    newTodos.push({id:6, title:itemValue, color:"info", start:moment(this.state.startDate).format('YYYY-MM-DD')});
+    this.setState({
       todos: newTodos
     });
-  	document.getElementById("tvalue").title = "";
-     this.setState({ 
+    document.getElementById("tvalue").title = "";
+     this.setState({
       open: false
     })
-    console.log(newTodos)
   }
 
   backgroundClicked() {
-    this.setState({ 
+    this.setState({
       open: false
     })
   }
@@ -78,7 +76,7 @@ class List extends Component {
                 />
               </div>
             </FormGroup>
-            
+
             <Button onClick={this.createTodo.bind(this)}> Create </Button>
             </Form>
             </Popup>
@@ -87,8 +85,8 @@ class List extends Component {
             {this.state.todos.map(function(item) {
               return <Todo parent={self} item={item} />;
             })}
-          
-            	<Button outline color="primary" size="lg" onClick={this.openAlert.bind(this)}> New </Button>
+
+              <Button outline color="primary" size="lg" onClick={this.openAlert.bind(this)}> New </Button>
               </Col>
               <Col>
               <TaskCalendar events={this.state.todos}/>

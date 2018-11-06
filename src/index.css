@@ -12,3 +12,8 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+// react-compatibility colors example
+.fc-day-grid-event.fc-h-event.fc-event.fc-start.fc-end {
+  background-color: #bee5eb;
+}

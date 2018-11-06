@@ -4,24 +4,21 @@ import FullCalendar from 'fullcalendar-reactwrapper';
 
 
 class TaskCalendar extends Component {
-	 constructor(props) {
+   constructor(props) {
     super(props);
 
     this.state = {
       events: [],
     };
   }
-	
-	
 
-	render() {
-      return (
-      	<FullCalendar
-      		
-      		events={this.props.events}
-      	/>
-      );
-    }
+  render() {
+    return (
+      <FullCalendar
+        events={this.props.events}
+      />
+    );
+  }
 
 }
 
