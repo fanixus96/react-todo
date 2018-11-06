@@ -17,7 +17,7 @@ class Todo extends Component {
   openAlert() {
     this.setState({ open: true })
   }
-  
+
   closeAlert() {
     var items = this.props.parent.state.todos;
     var idx = items.indexOf(this.props.item);
@@ -25,7 +25,7 @@ class Todo extends Component {
     this.props.parent.setState({
       todos: items
     });
-    this.setState({ 
+    this.setState({
       open: false,
     })
   }
@@ -44,7 +44,7 @@ class Todo extends Component {
     });
 
   }
-  
+
   deleteEvent() {
     var items = this.props.parent.state.todos;
     var idx = items.indexOf(this.props.item)
@@ -62,7 +62,7 @@ class Todo extends Component {
    if (idx!=-1){
         items[idx].color="warning";
       }
-    
+
     this.props.parent.setState({
       todos: items
     });
@@ -71,7 +71,7 @@ class Todo extends Component {
   render() {
     return (
       <div className="container">
-        <ListGroup  onClick={this.eventDone.bind(this)}>
+        <ListGroup>
           <Popup open={this.state.open}>
             <div>
               <input type="text" id="item-edit" defaultValue={this.props.item.title}/>
@@ -79,12 +79,12 @@ class Todo extends Component {
               <button onClick={this.closeAlert.bind(this)}>Cancel</button>
             </div>
           </Popup>
-          <ListGroupItem  color={this.props.item.color}>{this.props.item.title}</ListGroupItem>
-          <Button color="primary" onClick={this.openAlert.bind(this)} block>Edit</Button> 
-          <Button color="secondary" onClick={this.deleteEvent.bind(this)} block>Delete</Button> 
+          <ListGroupItem  onClick={this.eventDone.bind(this)} color={this.props.item.color}>{this.props.item.title}</ListGroupItem>
+          <Button color="primary" onClick={this.openAlert.bind(this)} block>Edit</Button>
+          <Button color="secondary" onClick={this.deleteEvent.bind(this)} block>Delete</Button>
         </ListGroup>
       </div>
-      
+
     );
   }
 }
