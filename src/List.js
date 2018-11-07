@@ -35,7 +35,7 @@ class List extends Component {
     });
   }
 
-  createTodo() {
+  createTodo(newTodos, itemValue) {
     var itemValue = document.getElementById("tvalue").value;
     var newTodos = this.state.todos.slice(0);
     newTodos.push({id:6, title:itemValue, color:"info", start:moment(this.state.startDate).format('YYYY-MM-DD')});
@@ -89,7 +89,7 @@ class List extends Component {
               <Button outline color="primary" size="lg" onClick={this.openAlert.bind(this)}> New </Button>
               </Col>
               <Col>
-              <TaskCalendar events={this.state.todos}/>
+              <TaskCalendar events={this.state.todos} parent={self} />
               </Col>
           </Row>
           </Container>

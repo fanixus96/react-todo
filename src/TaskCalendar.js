@@ -12,10 +12,19 @@ class TaskCalendar extends Component {
     };
   }
 
+  addEvent(date) {
+  	 this.props.parent.setState({
+      startDate: date
+    })
+  	this.props.parent.openAlert();
+  }
+
+
   render() {
     return (
       <FullCalendar
         events={this.props.events}
+        dayClick={this.addEvent.bind(this)}
       />
     );
   }
