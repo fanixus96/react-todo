@@ -9,3 +9,10 @@ text-decoration: line-through;
 
 }
 
+.beforeClicked {
+	
+}
+
+.afterClicked {
+	display: none;
+}
