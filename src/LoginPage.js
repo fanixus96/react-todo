@@ -19,7 +19,19 @@ class LoginPage extends Component {
   	this.setState({
       buttonStyle: "afterClicked",
     })
+    fetch('https://tower-rails.herokuapp.com/auth/sign_in', { 
+    	method: 'POST',
+      	headers: {
+	        'Accept': 'application/json, text/plain, */*',
+	        'Content-Type': 'application/json',
+      	},
+      body: JSON.stringify({ email:'fanixus96@gmail.com', password: 'lubieplacki123' }) 
+    }).then(function(response){
+    		console.log(response);
+    	})
+
   }
+
 
 	render() {
     	return (
