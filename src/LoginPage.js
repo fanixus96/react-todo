@@ -27,7 +27,8 @@ class LoginPage extends Component {
       	},
       body: JSON.stringify({ email:'fanixus96@gmail.com', password: 'lubieplacki123' }) 
     }).then(function(response){
-    		console.log(response);
+    		var cre = JSON.parse(response.headers.get('Uid'));
+    		console.log(cre);
     	})
 
   }
