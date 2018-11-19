@@ -69,6 +69,11 @@ class List extends Component {
     })
   }
 
+  signOut() {
+  	localStorage.clear();
+  	window.location.reload();
+  }
+
   render() {
     var self = this;
 
@@ -91,7 +96,6 @@ class List extends Component {
                 />
               </div>
             </FormGroup>
-
             <Button onClick={this.createTodo.bind(this)}> Create </Button>
             </Form>
             </Popup>
@@ -106,6 +110,9 @@ class List extends Component {
               <Col>
               <TaskCalendar events={this.state.todos} parent={self} />
               </Col>
+              <Col sm="1" >
+              	<Button onClick={this.signOut.bind(this)}> Sign out </Button>
+          	  </Col>
           </Row>
           </Container>
       </div>
