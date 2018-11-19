@@ -5,9 +5,23 @@ import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import TaskCalendar from './TaskCalendar.js';
 import { Grid, Row, Col, Container, Button, Form, FormGroup, Label, Input} from 'reactstrap';
+import './main.css';
 
 class List extends Component {
 
+    componentWillMount() {
+    if (localStorage.getItem("accessToken") === "null" || localStorage.getItem("accessToken") === null) {
+       this.setState({
+        listClass: "afterClicked"
+      });
+       this.props.history.push("/")
+    } else {
+      this.setState({
+        listClass: "list",
+      });
+    }
+  }
+ 
   constructor(props) {
     super(props);
 
@@ -19,7 +33,8 @@ class List extends Component {
       { title:"czwarty", color: "info", start: '2018-11-05'}
       ],
       open: false,
-      startDate: moment()
+      startDate: moment(),
+      listClass: "list",
     };
   }
 
@@ -58,7 +73,7 @@ class List extends Component {
     var self = this;
 
     return (
-      <div>
+      <div className={this.state.listClass}>
         <Container>
           <Popup open={this.state.open} onClose={this.backgroundClicked.bind(this)}>
           <Form inline>
