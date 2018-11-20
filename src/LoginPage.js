@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Row, Col, Container, Button, Form, FormGroup, Label, Input, Alert} from 'reactstrap';
-import { Router, Route, Link } from "react-router-dom";
-import Navigator from './Navigator.js';
+import { Row, Col, Container, Button, Form, FormGroup, Label, Input, Alert} from 'reactstrap';
 import './main.css';
 
 
@@ -18,7 +16,6 @@ class LoginPage extends Component {
       this.setState({
         buttonStyle: "afterClicked",
       });
-      console.log(localStorage.getItem("accessToken"))
     }
   }
 
@@ -78,7 +75,7 @@ class LoginPage extends Component {
 			        		</FormGroup>
 			        		<FormGroup>
 			      				<Label for="passwordInput" className="mr-sm-2">Password</Label>
-			      				<Input type = "submit" type="password" id="passwordInput"/>
+			      				<Input type="password" id="passwordInput"/>
 			      				<Alert color="danger" isOpen={this.state.visible} toggle={this.onDismiss}>
 		        					The username or password you entered did not match our records. Please double-check and try again.
 		      					</Alert>

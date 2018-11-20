@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Popup from "reactjs-popup";
-import TaskCalendar from './TaskCalendar.js'
 import { ListGroup, ListGroupItem, Button } from 'reactstrap';
 import './main.css';
 
@@ -48,7 +47,7 @@ class Todo extends Component {
   deleteEvent() {
     var items = this.props.parent.state.todos;
     var idx = items.indexOf(this.props.item)
-      if (idx!=-1){
+      if (idx!==-1){
         items.splice(idx,1)
       }
     this.props.parent.setState({
@@ -59,7 +58,7 @@ class Todo extends Component {
   eventDone() {
    var items = this.props.parent.state.todos;
    var idx = items.indexOf(this.props.item)
-   if (idx!=-1){
+   if (idx!==-1){
         items[idx].color="warning";
       }
 

@@ -4,7 +4,7 @@ import Popup from "reactjs-popup";
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import TaskCalendar from './TaskCalendar.js';
-import { Grid, Row, Col, Container, Button, Form, FormGroup, Label, Input} from 'reactstrap';
+import { Row, Col, Container, Button, Form, FormGroup, Label, Input} from 'reactstrap';
 import './main.css';
 
 class List extends Component {
@@ -19,23 +19,43 @@ class List extends Component {
       this.setState({
         listClass: "list",
       });
+      this.getTodos();
     }
   }
+
  
   constructor(props) {
     super(props);
 
     this.state = {
       todos: [
-      { title:"pierwszy", color: "info", start: '2018-11-02'},
-      { title:"drugi", color: "info", start: '2018-11-03'},
-      { title:"trzeci", color: "info", start: '2018-11-04'},
-      { title:"czwarty", color: "info", start: '2018-11-05'}
+      {id:'1', title:"pierwszy", color: "info", start: '2018-11-02'},
+      {id:'2', title:"drugi", color: "info", start: '2018-11-03'},
+      {id:'3', title:"trzeci", color: "info", start: '2018-11-04'},
+      {id:'4', title:"czwarty", color: "info", start: '2018-11-05'}
       ],
       open: false,
       startDate: moment(),
       listClass: "list",
     };
+  }
+
+  getTodos() {
+    console.log(localStorage.getItem("uid"));
+    console.log(localStorage.getItem("client"));
+    console.log(localStorage.getItem("accessToken"));
+    fetch('https://tower-rails.herokuapp.com/task_lists', { 
+        method: 'Get',
+        headers: {
+          'Accept': 'application/json, text/plain, */*',
+          'Content-Type': 'application/json',
+          'uid': localStorage.getItem("uid"), 
+          'client': localStorage.getItem("client"), 
+          'Access-Token': localStorage.getItem("accessToken") 
+        },
+    }).then(function(response){
+      console.log(response)
+    })
   }
 
   openAlert() {
@@ -51,8 +71,6 @@ class List extends Component {
   }
 
   createTodo(newTodos, itemValue) {
-    var itemValue = document.getElementById("tvalue").value;
-    var newTodos = this.state.todos.slice(0);
     newTodos.push({id:6, title:itemValue, color:"info", start:moment(this.state.startDate).format('YYYY-MM-DD')});
     this.setState({
       todos: newTodos
@@ -102,9 +120,8 @@ class List extends Component {
           <Row>
             <Col>
             {this.state.todos.map(function(item) {
-              return <Todo parent={self} item={item} />;
-            })}
-
+              return <Todo parent={self} item={item} key={item.id}/>
+            	})}
               <Button outline color="primary" size="lg" onClick={this.openAlert.bind(this)}> New </Button>
               </Col>
               <Col>

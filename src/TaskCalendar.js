@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import FullCalendar from 'fullcalendar-reactwrapper';
 
 
@@ -14,7 +13,7 @@ class TaskCalendar extends Component {
 
   addEvent(date) {
   	 this.props.parent.setState({
-      startDate: date
+     	startDate: date
     })
   	this.props.parent.openAlert();
   }
@@ -25,6 +24,7 @@ class TaskCalendar extends Component {
       <FullCalendar
         events={this.props.events}
         dayClick={this.addEvent.bind(this)}
+        //eventClick={this.props.parent.editEvent()}
       />
     );
   }

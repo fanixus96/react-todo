@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Router, Route, Link } from "react-router-dom";
+import { Router, Route } from "react-router-dom";
 import { createBrowserHistory } from 'history';
 import LoginPage from './LoginPage.js';
 import List from './List.js';
