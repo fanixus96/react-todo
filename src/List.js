@@ -20,9 +20,9 @@ class List extends Component {
       Deserializer.getTodos()
       this.setState({
         listClass: "list",
-       // todos: JSON.parse(localStorage.getItem("newTodos"))
+        todos: Deserializer.getTodos
       });
-      console.log(Deserializer.getTodos())
+      console.log(Deserializer.getTodos)
     }
   }
 

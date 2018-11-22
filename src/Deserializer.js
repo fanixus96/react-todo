@@ -23,9 +23,11 @@ class Deserializer {
 	          delete json[0].name
 	          delete json[0].created_at
 	          delete json[0]._proto_
-	          var newTodos1 = [];
-	          newTodos1.push(json[0])
-	         return (newTodos1);
+	          delete json[0].updated_at
+	          console.log(json[0])
+	          var apiTasks = []
+	          apiTasks.push(json[0])
+			  return apiTasks
 	        })
 	    })
   }
