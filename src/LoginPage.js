@@ -7,7 +7,7 @@ import './main.css';
 class LoginPage extends Component {
 
   componentWillMount() {
-    if (localStorage.getItem("accessToken") === "null" || localStorage.getItem("accessToken") === null) {
+    if (localStorage.getItem("uid") === "null" || localStorage.getItem("uid") === null) {
        this.setState({
         buttonStyle: "beforeClicked"
       });

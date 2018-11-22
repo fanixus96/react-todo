@@ -4,22 +4,25 @@ import Popup from "reactjs-popup";
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import TaskCalendar from './TaskCalendar.js';
+import Deserializer from './Deserializer.js'
 import { Row, Col, Container, Button, Form, FormGroup, Label, Input} from 'reactstrap';
 import './main.css';
 
 class List extends Component {
 
     componentWillMount() {
-    if (localStorage.getItem("accessToken") === "null" || localStorage.getItem("accessToken") === null) {
+    if (localStorage.getItem("uid") === "null" || localStorage.getItem("uid") === null) {
        this.setState({
         listClass: "afterClicked"
       });
        this.props.history.push("/")
     } else {
+      Deserializer.getTodos()
       this.setState({
         listClass: "list",
+       // todos: JSON.parse(localStorage.getItem("newTodos"))
       });
-      this.getTodos();
+      console.log(Deserializer.getTodos())
     }
   }
 
@@ -28,35 +31,15 @@ class List extends Component {
     super(props);
 
     this.state = {
-      todos: [
-      {id:'1', title:"pierwszy", color: "info", start: '2018-11-02'},
-      {id:'2', title:"drugi", color: "info", start: '2018-11-03'},
-      {id:'3', title:"trzeci", color: "info", start: '2018-11-04'},
-      {id:'4', title:"czwarty", color: "info", start: '2018-11-05'}
-      ],
+      todos: [],
+      todos1: [],
       open: false,
       startDate: moment(),
       listClass: "list",
     };
   }
 
-  getTodos() {
-    console.log(localStorage.getItem("uid"));
-    console.log(localStorage.getItem("client"));
-    console.log(localStorage.getItem("accessToken"));
-    fetch('https://tower-rails.herokuapp.com/task_lists', { 
-        method: 'Get',
-        headers: {
-          'Accept': 'application/json, text/plain, */*',
-          'Content-Type': 'application/json',
-          'uid': localStorage.getItem("uid"), 
-          'client': localStorage.getItem("client"), 
-          'Access-Token': localStorage.getItem("accessToken") 
-        },
-    }).then(function(response){
-      console.log(response)
-    })
-  }
+
 
   openAlert() {
     this.setState({
@@ -70,12 +53,14 @@ class List extends Component {
     });
   }
 
-  createTodo(newTodos, itemValue) {
+  createTodo() {
+    var itemValue = document.getElementById("tvalue").value;
+    var newTodos = this.state.todos.slice(0);
     newTodos.push({id:6, title:itemValue, color:"info", start:moment(this.state.startDate).format('YYYY-MM-DD')});
     this.setState({
       todos: newTodos
     });
-    document.getElementById("tvalue").title = "";
+    document.getElementById("tvalue").value = "";
      this.setState({
       open: false
     })
