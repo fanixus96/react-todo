@@ -10,19 +10,18 @@ import './main.css';
 
 class List extends Component {
 
-    componentWillMount() {
+    async componentWillMount() {
     if (localStorage.getItem("uid") === "null" || localStorage.getItem("uid") === null) {
        this.setState({
         listClass: "afterClicked"
       });
        this.props.history.push("/")
     } else {
-      Deserializer.getTodos()
+      Deserializer.asyncTodos();
       this.setState({
         listClass: "list",
-        todos: Deserializer.getTodos
+        //todos: Deserializer.getTodos
       });
-      console.log(Deserializer.getTodos)
     }
   }
 
