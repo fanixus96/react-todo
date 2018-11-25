@@ -17,10 +17,9 @@ class List extends Component {
       });
        this.props.history.push("/")
     } else {
-      Deserializer.asyncTodos();
+      this.loadRemoteTodos()
       this.setState({
         listClass: "list",
-        //todos: Deserializer.getTodos
       });
     }
   }
@@ -38,7 +37,13 @@ class List extends Component {
     };
   }
 
-
+async loadRemoteTodos() {
+  var tablica = await Deserializer.asyncTodos();
+  console.log(tablica)
+  this.setState({
+        todos: tablica
+      });
+}
 
   openAlert() {
     this.setState({
