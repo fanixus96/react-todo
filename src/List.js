@@ -60,10 +60,25 @@ async loadRemoteTodos() {
   createTodo() {
     var itemValue = document.getElementById("tvalue").value;
     var newTodos = this.state.todos.slice(0);
-    newTodos.push({id:6, title:itemValue, color:"info", start:moment(this.state.startDate).format('YYYY-MM-DD')});
+    newTodos.push({title:itemValue, color:"info", start:moment(this.state.startDate).format('YYYY-MM-DD')});
     this.setState({
       todos: newTodos
     });
+        fetch('https://tower-rails.herokuapp.com/task_lists/1/tasks', { 
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json, text/plain, */*',
+          'Content-Type': 'application/json',
+          'uid': localStorage.getItem("uid"), 
+          'client': localStorage.getItem("client"), 
+          'Access-Token': localStorage.getItem("accessToken") 
+        },
+        body: JSON.stringify({content:itemValue, created_at:moment(this.state.startDate).format('YYYY-MM-DD')}) 
+    }).then(function(response){
+        localStorage.setItem("uid", response.headers.get('Uid'));
+        localStorage.setItem("client", response.headers.get('Client'));
+          console.log(itemValue)
+        })
     document.getElementById("tvalue").value = "";
      this.setState({
       open: false

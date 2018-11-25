@@ -41,7 +41,7 @@ class LoginPage extends Component {
     	method: 'POST',
       	headers: {
 	        'Accept': 'application/json, text/plain, */*',
-	        'Content-Type': 'application/json',
+	        'Content-Type': 'application/json'
       	},
       	body: JSON.stringify({ email:document.getElementById('loginInput').value, password: document.getElementById('passwordInput').value }) 
     }).then(function(response){
@@ -51,6 +51,7 @@ class LoginPage extends Component {
         	console.log(localStorage.getItem("accessToken"))
 
 	        if (localStorage.getItem("accessToken") === "null") {
+            document.getElementById("passwordInput").value = "";  
 	        	console.log("wrong credentials")
 	        	self.setState({
 	        		visible: true,

@@ -5,7 +5,7 @@ class Deserializer {
   	}	
 
     static async getTodos() {
-	    var response = await fetch('https://tower-rails.herokuapp.com/task_lists', { 
+	    var response = await fetch('https://tower-rails.herokuapp.com/task_lists/1/tasks', { 
 	        method: 'Get',
 	        headers: {
 	          'Accept': 'application/json, text/plain, */*',
@@ -20,17 +20,25 @@ class Deserializer {
 
   	static async asyncTodos() {
   		var response = await this.getTodos();
+  		console.log(response)
   		localStorage.setItem("uid", response.headers.get('Uid'));
 	    localStorage.setItem("client", response.headers.get('Client'));
   		var tablica = await response.json();
-  		 	  tablica[0].title = tablica[0].name;
-	          tablica[0].start = tablica[0].created_at;
-	          delete tablica[0].name
-	          delete tablica[0].created_at
-	          delete tablica[0]._proto_
-	          delete tablica[0].updated_at
-  		return tablica;
-  		console.log(tablica)
+  		var tablica1 = tablica.map(function(x) {
+  			  x.title = x.content;
+	          x.start = x.created_at;
+	          delete x.content
+	          delete x._proto_
+	          delete x.created_at
+	          delete x.updated_at
+	          delete x.list_position;
+	          delete x.task_list_id;
+	          return x
+
+  		})
+  		 	  
+  		return tablica1;
+  		console.log(tablica1)
   	}
 
 }
