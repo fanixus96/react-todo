@@ -47,10 +47,25 @@ class Todo extends Component {
   deleteEvent() {
     var items = this.props.parent.state.todos;
     var idx = items.indexOf(this.props.item)
+    var itemId = this.props.item.id;
+    console.log(this.props.item.id);
       if (idx!==-1){
         items.splice(idx,1)
+         fetch('https://tower-rails.herokuapp.com/task_lists/1/tasks/'+itemId, { 
+            method: 'DELETE',
+            headers: {
+              'Accept': 'application/json, text/plain, */*',
+              'Content-Type': 'application/json',
+              'uid': localStorage.getItem("uid"), 
+              'client': localStorage.getItem("client"), 
+              'Access-Token': localStorage.getItem("accessToken") 
+            }
+        }).then(function(response){
+            localStorage.setItem("uid", response.headers.get('Uid'));
+            localStorage.setItem("client", response.headers.get('Client'));
+          })
       }
-    this.props.parent.setState({
+      this.props.parent.setState({
       todos: items
     });
   };
