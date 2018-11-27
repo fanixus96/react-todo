@@ -30,6 +30,7 @@ class Todo extends Component {
   }
 
   editEvent() {
+    var itemId = this.props.item.id;
     var items = this.props.parent.state.todos;
     var newValue = document.getElementById("item-edit").value;
     var idx = items.indexOf(this.props.item)
@@ -38,6 +39,22 @@ class Todo extends Component {
     this.props.parent.setState({
       todos: items
     });
+
+     fetch('https://tower-rails.herokuapp.com/task_lists/1/tasks/'+itemId, { 
+            method: 'PUT',
+            headers: {
+              'Accept': 'application/json, text/plain, */*',
+              'Content-Type': 'application/json',
+              'uid': localStorage.getItem("uid"), 
+              'client': localStorage.getItem("client"), 
+              'Access-Token': localStorage.getItem("accessToken") 
+            },
+            body: JSON.stringify({content:newValue})
+        }).then(function(response){
+            localStorage.setItem("uid", response.headers.get('Uid'));
+            localStorage.setItem("client", response.headers.get('Client'));
+          })
+
     this.setState({
       open: false
     });
