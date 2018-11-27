@@ -63,6 +63,13 @@ class LoginPage extends Component {
 
   }
 
+  enterPressed(event) {
+    var code = event.keyCode || event.which;
+    if(code === 13) { 
+      this.buttonColorChange();
+    } 
+}
+
 	render() {
     	return (
     		<Container className={this.state.buttonStyle}>
@@ -76,7 +83,7 @@ class LoginPage extends Component {
 			        		</FormGroup>
 			        		<FormGroup>
 			      				<Label for="passwordInput" className="mr-sm-2">Password</Label>
-			      				<Input type="password" id="passwordInput"/>
+			      				<Input type="password" id="passwordInput" onKeyPress={this.enterPressed.bind(this)}/>
 			      				<Alert color="danger" isOpen={this.state.visible} toggle={this.onDismiss}>
 		        					The username or password you entered did not match our records. Please double-check and try again.
 		      					</Alert>
