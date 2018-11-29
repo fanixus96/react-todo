@@ -61,7 +61,7 @@ async loadRemoteTodos() {
     var self = this;
     var itemValue = document.getElementById("tvalue").value;
     var newTodos = this.state.todos.slice(0);
-    var time = moment(this.state.startDate).format('YYYY-MM-DD')
+    var time = moment(this.state.startDate).format('YYYY-MM-DD');
     newTodos.push({title:itemValue, color:"info", start:time});
     this.setState({
       todos: newTodos
@@ -76,7 +76,7 @@ async loadRemoteTodos() {
           'client': localStorage.getItem("client"), 
           'Access-Token': localStorage.getItem("accessToken") 
         },
-        body: JSON.stringify({content:itemValue, color:"info", created_at:time}) 
+        body: JSON.stringify({content:itemValue, happens_at:time}) 
     }).then(function(response){
         localStorage.setItem("uid", response.headers.get('Uid'));
         localStorage.setItem("client", response.headers.get('Client'));

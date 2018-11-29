@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 class Deserializer {
 
 
@@ -26,15 +28,17 @@ class Deserializer {
   		var tablica = await response.json();
   		console.log(tablica)
   		var tablica1 = tablica.map(function(x) {
-  			  x.title = x.content;
-	          x.start = x.created_at;
-	          delete x.content
-	          delete x._proto_
-	          delete x.created_at
-	          delete x.updated_at
-	          delete x.list_position;
-	          delete x.task_list_id;
-	          return x
+  			x.happens_at = moment(x.happens_at).format('YYYY-MM-DD');
+  			x.title = x.content;
+	        x.start = x.happens_at;
+	        console.log(x.happens_at)
+	        delete x.content
+	        delete x._proto_
+	        delete x.created_at
+	        delete x.updated_at
+	        delete x.list_position;
+	        delete x.task_list_id;
+	        return x
 
   		})
   		 	  
