@@ -26,7 +26,6 @@ class Deserializer {
   		localStorage.setItem("uid", response.headers.get('Uid'));
 	    localStorage.setItem("client", response.headers.get('Client'));
   		var tablica = await response.json();
-  		console.log(tablica)
   		var tablica1 = tablica.map(function(x) {
   			x.happens_at = moment(x.happens_at).format('YYYY-MM-DD');
   			x.title = x.content;
@@ -40,10 +39,8 @@ class Deserializer {
 	        delete x.task_list_id;
 	        return x
 
-  		})
-  		 	  
+  		})	  
   		return tablica1;
-  		console.log(tablica1)
   	}
 
 }

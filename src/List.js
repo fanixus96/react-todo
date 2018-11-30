@@ -135,7 +135,7 @@ async loadRemoteTodos() {
               <TaskCalendar events={this.state.todos} parent={self} />
               </Col>
               <Col sm="1" >
-              	<Button onClick={this.signOut.bind(this)}> Sign out </Button>
+              	<Button onClick={this.signOut.bind(this)}>Sign out</Button>
           	  </Col>
           </Row>
           </Container>
