@@ -1,10 +1,7 @@
 import moment from 'moment';
 
 class Deserializer {
-
-
-	constructor(props) {
-  	}	
+	
 
     static async getTodos() {
 	    var response = await fetch('https://tower-rails.herokuapp.com/task_lists/1/tasks', { 

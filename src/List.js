@@ -58,7 +58,6 @@ async loadRemoteTodos() {
   }
 
   createTodo() {
-    var self = this;
     var itemValue = document.getElementById("tvalue").value;
     var newTodos = this.state.todos.slice(0);
     var time = moment(this.state.startDate).format('YYYY-MM-DD');
