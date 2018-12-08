@@ -38,10 +38,9 @@ class List extends Component {
   }
 
 async loadRemoteTodos() {
-  var tablica = await Deserializer.asyncTodos();
-  console.log(tablica)
+  var RemoteTodos = await Deserializer.asyncTodos();
   this.setState({
-        todos: tablica
+        todos: RemoteTodos
       });
 }
 

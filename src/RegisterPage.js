@@ -4,12 +4,12 @@ import './main.css';
 
 class RegisterPage extends Component {
 
-		constructor(props) {
-    super(props);
-    this.state = {
-      visible: false,
-      errorMessage: "error"
-    }
+	constructor(props) {
+	    super(props);
+	    this.state = {
+	      visible: false,
+	      errorMessage: "error"
+	    }
   }
 
 	 async CreateAccount() {
