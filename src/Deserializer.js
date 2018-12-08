@@ -22,17 +22,7 @@ class Deserializer {
 		var userList = await response.json();
 		console.log(userList);
 		if (userList.length < 1) {
-			fetch('https://tower-rails.herokuapp.com/task_lists', { 
-	        method: 'POST',
-	        headers: {
-	          'Accept': 'application/json, text/plain, */*',
-	          'Content-Type': 'application/json',
-	          'uid': localStorage.getItem("uid"), 
-	          'client': localStorage.getItem("client"), 
-	          'Access-Token': localStorage.getItem("accessToken") 
-	        },
-	        body: JSON.stringify({ task_list: { name: "test" }})
-	    	})
+		this.createLists();
 		} else {
 			return userList;
 		}

@@ -44,6 +44,12 @@ async loadRemoteTodos() {
       });
 }
 
+async currentList () {
+  var list = await Deserializer.userListId();
+  var id = list[0].id;
+  return id;
+}
+
   openAlert() {
     this.setState({
       open: true
@@ -56,7 +62,8 @@ async loadRemoteTodos() {
     });
   }
 
-  createTodo() {
+  async createTodo() {
+    var id = await this.currentList();
     var itemValue = document.getElementById("tvalue").value;
     var newTodos = this.state.todos.slice(0);
     var time = moment(this.state.startDate).format('YYYY-MM-DD');
@@ -65,7 +72,7 @@ async loadRemoteTodos() {
       todos: newTodos
     });
     console.log(time)
-        fetch('https://tower-rails.herokuapp.com/task_lists/1/tasks', { 
+        fetch('https://tower-rails.herokuapp.com/task_lists/'+id+'/tasks', { 
         method: 'POST',
         headers: {
           'Accept': 'application/json, text/plain, */*',

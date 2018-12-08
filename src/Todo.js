@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Popup from "reactjs-popup";
 import { ListGroup, ListGroupItem, Button } from 'reactstrap';
+import Deserializer from './Deserializer.js'
 import './main.css';
 
 class Todo extends Component {
@@ -29,7 +30,14 @@ class Todo extends Component {
     })
   }
 
-  editEvent() {
+  async currentList () {
+    var list = await Deserializer.userListId();
+    var id = list[0].id;
+    return id;
+}
+
+  async editEvent() {
+    var listId = await this.currentList();
     var itemId = this.props.item.id;
     var items = this.props.parent.state.todos;
     var newValue = document.getElementById("item-edit").value;
@@ -40,7 +48,7 @@ class Todo extends Component {
       todos: items
     });
 
-     fetch('https://tower-rails.herokuapp.com/task_lists/1/tasks/'+itemId, { 
+     fetch('https://tower-rails.herokuapp.com/task_lists/'+listId+'/tasks/'+itemId, { 
             method: 'PUT',
             headers: {
               'Accept': 'application/json, text/plain, */*',
@@ -61,14 +69,15 @@ class Todo extends Component {
 
   }
 
-  deleteEvent() {
+  async deleteEvent() {
+    var listId = await this.currentList();
     var items = this.props.parent.state.todos;
     var idx = items.indexOf(this.props.item)
     var itemId = this.props.item.id;
     console.log(this.props.item.id);
       if (idx!==-1){
         items.splice(idx,1)
-         fetch('https://tower-rails.herokuapp.com/task_lists/1/tasks/'+itemId, { 
+         fetch('https://tower-rails.herokuapp.com/task_lists/'+listId+'/tasks/'+itemId, { 
             method: 'DELETE',
             headers: {
               'Accept': 'application/json, text/plain, */*',
