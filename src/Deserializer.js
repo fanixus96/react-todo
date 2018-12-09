@@ -23,6 +23,7 @@ class Deserializer {
 		console.log(userList);
 		if (userList.length < 1) {
 		this.createLists();
+		window.location.reload();
 		} else {
 			return userList;
 		}
