@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col, Container, Button, Form, FormGroup, Label, Input, Alert} from 'reactstrap';
+import { Row, Col, Container, Button, Form, FormGroup, Label, Input, Alert, Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, DropdownItem} from 'reactstrap';
 import './main.css';
 
 class RegisterPage extends Component {
@@ -8,7 +8,8 @@ class RegisterPage extends Component {
 	    super(props);
 	    this.state = {
 	      visible: false,
-	      errorMessage: "error"
+	      errorMessage: "error",
+	      collapsed: false,
 	    }
   }
 
@@ -61,19 +62,40 @@ class RegisterPage extends Component {
 	    if(code === 13) { 
 	      this.reactionToResponse();
 	    } 
-}
+	}
+
+	toggleNavbar() {
+	    this.setState({
+	      collapsed: !this.state.collapsed
+	    });
+  	}
 
 	render() {
     	return (
     		<div>
     			<Container>
     				<Row>
+    					<Col>
+               				<Navbar color="faded" light>
+				                <NavbarBrand className="mr-auto">react todo app</NavbarBrand>
+				                <NavbarToggler onClick={this.toggleNavbar.bind(this)} className="mr-2" />
+				                <Collapse isOpen={this.state.collapsed} navbar>
+				                  <Nav navbar>
+				                    <NavItem>
+				                      <DropdownItem onClick={this.backToLoginPage.bind(this)}>Login</DropdownItem>
+				                    </NavItem>
+				                  </Nav>
+				                </Collapse>
+              				</Navbar>
+            			</Col>
+    				</Row>
+    				<Row>
 	    				<Col/>
 		    			<Col>
 			      			<Form > 
 			      				<FormGroup>
 				      				<Label for="loginInput" className="mr-sm-2"/>
-				      				<Input id="loginInput" placeholder="Your Login"/>
+				      				<Input id="loginInput" placeholder="Your email"/>
 				        		</FormGroup>
 				        		<FormGroup>
 				      				<Label for="passwordInput" className="mr-sm-2"/>
@@ -97,9 +119,6 @@ class RegisterPage extends Component {
 			        		</Form>
 		        		</Col>
 		        		<Col>
-		        			<Button onClick={this.backToLoginPage.bind(this)}>
-		        				Back
-		        			</Button>
 		        		</Col>
 	        		</Row>
 	        	</Container>

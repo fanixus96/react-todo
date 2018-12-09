@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col, Container, Button, Form, FormGroup, Label, Input, Alert} from 'reactstrap';
+import { Row, Col, Container, Button, Form, FormGroup, Label, Input, Alert, Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, DropdownItem} from 'reactstrap';
 import './main.css';
 
 
@@ -24,6 +24,7 @@ class LoginPage extends Component {
     this.state = {
       buttonStyle: "beforeClicked",
       visible: false,
+      collapsed: false,
     }
   }
 
@@ -70,9 +71,30 @@ class LoginPage extends Component {
     } 
 }
 
+ toggleNavbar() {
+    this.setState({
+      collapsed: !this.state.collapsed
+    });
+  }
+
 	render() {
     	return (
     		<Container className={this.state.buttonStyle}>
+          <Row>
+            <Col>
+               <Navbar color="faded" light>
+                <NavbarBrand className="mr-auto">react todo app</NavbarBrand>
+                <NavbarToggler onClick={this.toggleNavbar.bind(this)} className="mr-2" />
+                <Collapse isOpen={this.state.collapsed} navbar>
+                  <Nav navbar>
+                    <NavItem>
+                      <DropdownItem onClick={this.navigateToRegisterPage.bind(this)}>Register</DropdownItem>
+                    </NavItem>
+                  </Nav>
+                </Collapse>
+              </Navbar>
+            </Col>
+          </Row>
     			<Row>
     				<Col/>
 	    			<Col xs="6" sm="6">
@@ -93,12 +115,9 @@ class LoginPage extends Component {
 				        	</Button>
 		        		</Form>
 	        		</Col>
-	        		<Col>
-	        			<Button onClick={this.navigateToRegisterPage.bind(this)}>
-	        				Register
-	        			</Button>
-	        		</Col>
-            	 </Row>
+  	        		<Col>
+  	        		</Col>
+              </Row>
         		</Container>
  
     	);

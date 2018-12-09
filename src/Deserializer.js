@@ -67,13 +67,13 @@ class Deserializer {
   	static async asyncTodos() {
   		var response = await this.getTodos();
   		if (response.status === 404) {
-  			console.log("asdasd")
   			console.log(response)
   		} else {
   		console.log(response)
   		localStorage.setItem("uid", response.headers.get('Uid'));
 	    localStorage.setItem("client", response.headers.get('Client'));
   		var todos = await response.json();
+  		console.log(todos)
   		var todosList = todos.map(function(x) {
   			x.happens_at = moment(x.happens_at).format('YYYY-MM-DD');
   			x.title = x.content;

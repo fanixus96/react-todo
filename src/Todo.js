@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Popup from "reactjs-popup";
-import { ListGroup, ListGroupItem, Button } from 'reactstrap';
+import { ListGroup, ListGroupItem, Button, Input, Label, FormGroup } from 'reactstrap';
 import Deserializer from './Deserializer.js'
 import './main.css';
 
@@ -40,9 +40,10 @@ class Todo extends Component {
     var listId = await this.currentList();
     var itemId = this.props.item.id;
     var items = this.props.parent.state.todos;
-    var newValue = document.getElementById("item-edit").value;
+    var newTitle = document.getElementById("tedit").value;
+    var newDetails = document.getElementById("tedit").value;
     var idx = items.indexOf(this.props.item)
-    items[idx].title=newValue;
+    items[idx].title=newTitle;
     items[idx].color="info";
     this.props.parent.setState({
       todos: items
@@ -57,7 +58,7 @@ class Todo extends Component {
               'client': localStorage.getItem("client"), 
               'Access-Token': localStorage.getItem("accessToken") 
             },
-            body: JSON.stringify({content:newValue})
+            body: JSON.stringify({content:newTitle, detials:newDetails,})
         }).then(function(response){
             localStorage.setItem("uid", response.headers.get('Uid'));
             localStorage.setItem("client", response.headers.get('Client'));
@@ -114,7 +115,14 @@ class Todo extends Component {
         <ListGroup  onClick={this.eventDone.bind(this)}>
           <Popup open={this.state.open} closeOnDocumentClick={false}>
             <div>
-              <input type="text" id="item-edit" defaultValue={this.props.item.title}/>
+                <FormGroup>
+              <Label for="tedit" className="mr-sm-2">What needs to be done?</Label>
+              <Input id="tedit" defaultValue={this.props.item.title}/>
+            </FormGroup>
+            <FormGroup>
+              <Label for="dedit" className="mr-sm-2">Additional instructions</Label>
+              <Input id="dedit" defaultValue={this.props.item.details}/>
+            </FormGroup>
               <button onClick={this.editEvent.bind(this)}>Save</button>
               <button onClick={this.closeAlert.bind(this)}>Cancel</button>
             </div>
