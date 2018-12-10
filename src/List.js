@@ -6,6 +6,7 @@ import moment from 'moment';
 import TaskCalendar from './TaskCalendar.js';
 import Deserializer from './Deserializer.js'
 import { Row, Col, Container, Button, Form, FormGroup, Label, Input, Alert, Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, DropdownItem, ListGroup, ListGroupItem} from 'reactstrap';
+import { BounceLoader } from 'react-spinners';
 import './main.css';
 
 class List extends Component {
@@ -13,17 +14,18 @@ class List extends Component {
     async componentWillMount() {
     if (localStorage.getItem("uid") === "null" || localStorage.getItem("uid") === null) {
        this.setState({
-        listClass: "afterClicked"
+        listClass: "afterClicked",
+        
       });
        this.props.history.push("/")
     } else {
       this.loadRemoteTodos()
       this.setState({
         listClass: "list",
+        loading: true,
       });
     }
   }
-
  
   constructor(props) {
     super(props);
@@ -38,13 +40,15 @@ class List extends Component {
       title: "",
       details: "",
       collapsed: false,
+      loading: false,
     };
   }
 
 async loadRemoteTodos() {
   var RemoteTodos = await Deserializer.asyncTodos();
   this.setState({
-        todos: RemoteTodos
+        todos: RemoteTodos,
+        loading: false,
       });
 }
 
@@ -106,6 +110,9 @@ async currentList () {
   }
 
   signOut() {
+    this.setState({
+      loading: true,
+    })
   	localStorage.clear();
   	window.location.reload();
   }
@@ -124,80 +131,90 @@ async currentList () {
 
   render() {
     var self = this;
-
-    return (
-      <div className={this.state.listClass}>
-        <Container>
-          <Row>
-            <Col>
-              <Navbar color="faded" light>
-                <NavbarBrand className="mr-auto">react todo app</NavbarBrand>
-                <NavbarToggler onClick={this.toggleNavbar.bind(this)} className="mr-2" />
-                <Collapse isOpen={this.state.collapsed} navbar>
-                  <Nav navbar>
-                    <NavItem>
-                      <DropdownItem onClick={this.signOut.bind(this)}>Logout</DropdownItem>
-                    </NavItem>
-                  </Nav>
-                </Collapse>
-              </Navbar>
-            </Col>
-          </Row>
-          <Popup open={this.state.open} onClose={this.backgroundClicked.bind(this)}>
-          <Form inline>
-            <FormGroup>
-              <Label for="tvalue" className="mr-sm-2">What needs to be done?</Label>
-              <Input id="tvalue"/>
-            </FormGroup>
-            <FormGroup>
-              <Label for="dvalue" className="mr-sm-2">Additional instructions</Label>
-              <Input id="dvalue"/>
-            </FormGroup>
-            <FormGroup>
-              <Label for="tcalendar" className="mr-sm-2">When?</Label>
-              <div id="tcalendar">
-                <DatePicker
-                  dateFormat="YYYY-MM-DD"
-                  selected={this.state.startDate}
-                  onChange={this.dateChange.bind(this)}
-                />
-              </div>
-            </FormGroup>
-            <Button onClick={this.createTodo.bind(this)}> Create </Button>
-            </Form>
-            </Popup>
-          <Row>
-            <Col>
-              <ListGroup>
-                <ListGroupItem>
-                  {this.state.todos.map(function(item) {
-                    return <Todo parent={self} item={item} key={item.id}/>
-                	})}
-                </ListGroupItem>
-                  <Button outline color="primary" size="lg" onClick={this.openAlert.bind(this)}> New </Button>
-                </ListGroup>
-              </Col>
+    if (this.state.loading) {
+      return (
+        <div className='loading'>
+        <BounceLoader
+          color={'#007bff'}
+          loading={this.state.loading}
+        />
+        </div>
+        )
+    } else {
+      return (
+        <div className={this.state.listClass}>
+          <Container>
+            <Row>
               <Col>
-                <TaskCalendar events={this.state.todos} parent={self} />
-                <Alert color="success" isOpen={this.state.visible} toggle={this.onDismiss.bind(this)}>
-                  <h4 className="alert-heading">Task details:</h4>
-                  <p>
-                    {this.state.title}
-                  </p>
-                  <hr />
-                  <p className="mb-0">
-                    {this.state.details}
-                  </p>
-              </Alert>
+                <Navbar color="faded" light>
+                  <NavbarBrand className="mr-auto">react todo app</NavbarBrand>
+                  <NavbarToggler onClick={this.toggleNavbar.bind(this)} className="mr-2" />
+                  <Collapse isOpen={this.state.collapsed} navbar>
+                    <Nav navbar>
+                      <NavItem>
+                        <DropdownItem onClick={this.signOut.bind(this)}>Logout</DropdownItem>
+                      </NavItem>
+                    </Nav>
+                  </Collapse>
+                </Navbar>
               </Col>
-              <Col sm="1" >
-          	  </Col>
-          </Row>
-          <Row/>
-          </Container>
-      </div>
-    );
+            </Row>
+            <Popup open={this.state.open} onClose={this.backgroundClicked.bind(this)}>
+            <Form inline>
+              <FormGroup>
+                <Label for="tvalue" className="mr-sm-2">What needs to be done?</Label>
+                <Input id="tvalue"/>
+              </FormGroup>
+              <FormGroup>
+                <Label for="dvalue" className="mr-sm-2">Additional instructions</Label>
+                <Input id="dvalue"/>
+              </FormGroup>
+              <FormGroup>
+                <Label for="tcalendar" className="mr-sm-2">When?</Label>
+                <div id="tcalendar">
+                  <DatePicker
+                    dateFormat="YYYY-MM-DD"
+                    selected={this.state.startDate}
+                    onChange={this.dateChange.bind(this)}
+                  />
+                </div>
+              </FormGroup>
+              <Button onClick={this.createTodo.bind(this)}> Create </Button>
+              </Form>
+              </Popup>
+            <Row>
+              <Col>
+                <ListGroup>
+                  <ListGroupItem>
+                    {this.state.todos.map(function(item) {
+                      return <Todo parent={self} item={item} key={item.id}/>
+                  	})}
+                  </ListGroupItem>
+                    <Button outline color="primary" size="lg" onClick={this.openAlert.bind(this)}> New </Button>
+                  </ListGroup>
+                </Col>
+                <Col>
+                  <TaskCalendar events={this.state.todos} parent={self} />
+                  <Alert color="success" isOpen={this.state.visible} toggle={this.onDismiss.bind(this)}>
+                    <h4 className="alert-heading">Task details:</h4>
+                    <p>
+                      {this.state.title}
+                    </p>
+                    <hr />
+                    <p className="mb-0">
+                      {this.state.details}
+                    </p>
+                </Alert>
+                </Col>
+                <Col sm="1" >
+            	  </Col>
+            </Row>
+            <Row/>
+            </Container>
+        </div>
+      );
   }
+}
 }
 
 export default List;
