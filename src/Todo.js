@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Popup from "reactjs-popup";
-import { ListGroup, ListGroupItem, Button, Input, Label, FormGroup } from 'reactstrap';
+import { ListGroup, ListGroupItem, Button, Input, Label, FormGroup, Col, Row } from 'reactstrap';
 import Deserializer from './Deserializer.js'
 import './main.css';
 
@@ -111,26 +111,34 @@ class Todo extends Component {
 
   render() {
     return (
-      <div className="container">
-        <ListGroup  onClick={this.eventDone.bind(this)}>
-          <Popup open={this.state.open} closeOnDocumentClick={false}>
-            <div>
-                <FormGroup>
-              <Label for="tedit" className="mr-sm-2">What needs to be done?</Label>
-              <Input id="tedit" defaultValue={this.props.item.title}/>
-            </FormGroup>
-            <FormGroup>
-              <Label for="dedit" className="mr-sm-2">Additional instructions</Label>
-              <Input id="dedit" defaultValue={this.props.item.details}/>
-            </FormGroup>
-              <button onClick={this.editEvent.bind(this)}>Save</button>
-              <button onClick={this.closeAlert.bind(this)}>Cancel</button>
-            </div>
-          </Popup>
-          <ListGroupItem  color={this.props.item.color}>{this.props.item.title}</ListGroupItem>
-          <Button color="primary" onClick={this.openAlert.bind(this)} block>Edit</Button>
-          <Button color="secondary" onClick={this.deleteEvent.bind(this)} block>Delete</Button>
-        </ListGroup>
+      <div >
+        <Col>
+          <ListGroup  onClick={this.eventDone.bind(this)}>
+            <Popup open={this.state.open} closeOnDocumentClick={false}>
+              <div>
+                  <FormGroup>
+                <Label for="tedit" className="mr-sm-2">What needs to be done?</Label>
+                <Input id="tedit" defaultValue={this.props.item.title}/>
+              </FormGroup>
+              <FormGroup>
+                <Label for="dedit" className="mr-sm-2">Additional instructions</Label>
+                <Input id="dedit" defaultValue={this.props.item.details}/>
+              </FormGroup>
+                <button onClick={this.editEvent.bind(this)}>Save</button>
+                <button onClick={this.closeAlert.bind(this)}>Cancel</button>
+              </div>
+            </Popup>
+            <ListGroupItem  color={this.props.item.color}>{this.props.item.title}</ListGroupItem>
+            <Row>
+            <Col>
+            <Button outline color="primary" onClick={this.openAlert.bind(this)} block>Edit</Button>
+            </Col>
+            <Col>
+            <Button outline color="danger" onClick={this.deleteEvent.bind(this)} block>Delete</Button>
+            </Col>
+            </Row>
+          </ListGroup>
+        </Col>
       </div>
 
     );

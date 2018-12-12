@@ -160,7 +160,7 @@ async currentList () {
               </Col>
             </Row>
             <Popup open={this.state.open} onClose={this.backgroundClicked.bind(this)}>
-            <Form inline>
+            <Form >
               <FormGroup>
                 <Label for="tvalue" className="mr-sm-2">What needs to be done?</Label>
                 <Input id="tvalue"/>
@@ -183,7 +183,7 @@ async currentList () {
               </Form>
               </Popup>
             <Row>
-              <Col>
+              <Col className="column">
                 <ListGroup>
                   <ListGroupItem>
                     {this.state.todos.map(function(item) {
