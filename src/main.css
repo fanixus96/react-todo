@@ -32,3 +32,11 @@ text-decoration: line-through;
   height:80vh;
   overflow:auto;
 }
+
+.default {
+
+}
+
+.blank {
+	border-color: red;
+}

@@ -41,6 +41,7 @@ class List extends Component {
       details: "",
       collapsed: false,
       loading: false,
+      inputClass: "default",
     };
   }
 
@@ -73,33 +74,40 @@ async currentList () {
   async createTodo() {
     var id = await this.currentList();
     var itemValue = document.getElementById("tvalue").value;
-    var detailsValue = document.getElementById("dvalue").value;
-    var newTodos = this.state.todos.slice(0);
-    var time = moment(this.state.startDate).format('YYYY-MM-DD');
-    newTodos.push({title:itemValue, details:detailsValue, color:"info", start:time});
-    this.setState({
-      todos: newTodos
-    });
-    console.log(time)
-        fetch('https://tower-rails.herokuapp.com/task_lists/'+id+'/tasks', { 
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json, text/plain, */*',
-          'Content-Type': 'application/json',
-          'uid': localStorage.getItem("uid"), 
-          'client': localStorage.getItem("client"), 
-          'Access-Token': localStorage.getItem("accessToken") 
-        },
-        body: JSON.stringify({content:itemValue, happens_at:time, details:detailsValue}) 
-    }).then(function(response){
-        localStorage.setItem("uid", response.headers.get('Uid'));
-        localStorage.setItem("client", response.headers.get('Client'));
-          
-        })
-    document.getElementById("tvalue").value = "";
-     this.setState({
-      open: false
-    })
+    if (itemValue.length == 0) {
+      this.setState({
+        inputClass: "blank"
+      })
+    } else {
+      var detailsValue = document.getElementById("dvalue").value;
+      var newTodos = this.state.todos.slice(0);
+      var time = moment(this.state.startDate).format('YYYY-MM-DD');
+      newTodos.push({title:itemValue, details:detailsValue, color:"info", start:time});
+      this.setState({
+        todos: newTodos
+      });
+      console.log(time)
+          fetch('https://tower-rails.herokuapp.com/task_lists/'+id+'/tasks', { 
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json',
+            'uid': localStorage.getItem("uid"), 
+            'client': localStorage.getItem("client"), 
+            'Access-Token': localStorage.getItem("accessToken") 
+          },
+          body: JSON.stringify({content:itemValue, happens_at:time, details:detailsValue}) 
+      }).then(function(response){
+          localStorage.setItem("uid", response.headers.get('Uid'));
+          localStorage.setItem("client", response.headers.get('Client'));
+            
+          })
+      document.getElementById("tvalue").value = "";
+       this.setState({
+        open: false
+      })
+    }
+
   }
 
  
@@ -163,7 +171,7 @@ async currentList () {
             <Form >
               <FormGroup>
                 <Label for="tvalue" className="mr-sm-2">What needs to be done?</Label>
-                <Input id="tvalue"/>
+                <Input id="tvalue" className={this.state.inputClass}/>
               </FormGroup>
               <FormGroup>
                 <Label for="dvalue" className="mr-sm-2">Additional instructions</Label>

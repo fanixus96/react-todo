@@ -11,6 +11,7 @@ class Todo extends Component {
 
     this.state = {
        open: false,
+       inputClass: "default",
     };
   }
 
@@ -41,33 +42,38 @@ class Todo extends Component {
     var itemId = this.props.item.id;
     var items = this.props.parent.state.todos;
     var newTitle = document.getElementById("tedit").value;
-    var newDetails = document.getElementById("tedit").value;
-    var idx = items.indexOf(this.props.item)
-    items[idx].title=newTitle;
-    items[idx].color="info";
-    this.props.parent.setState({
-      todos: items
-    });
+    if (newTitle.length == 0) {
+      this.setState({
+        inputClass: "blank"
+      })
+    } else {
+        var newDetails = document.getElementById("tedit").value;
+        var idx = items.indexOf(this.props.item)
+        items[idx].title=newTitle;
+        items[idx].color="info";
+        this.props.parent.setState({
+          todos: items
+        });
 
-     fetch('https://tower-rails.herokuapp.com/task_lists/'+listId+'/tasks/'+itemId, { 
-            method: 'PUT',
-            headers: {
-              'Accept': 'application/json, text/plain, */*',
-              'Content-Type': 'application/json',
-              'uid': localStorage.getItem("uid"), 
-              'client': localStorage.getItem("client"), 
-              'Access-Token': localStorage.getItem("accessToken") 
-            },
-            body: JSON.stringify({content:newTitle, detials:newDetails,})
-        }).then(function(response){
-            localStorage.setItem("uid", response.headers.get('Uid'));
-            localStorage.setItem("client", response.headers.get('Client'));
-          })
+         fetch('https://tower-rails.herokuapp.com/task_lists/'+listId+'/tasks/'+itemId, { 
+                method: 'PUT',
+                headers: {
+                  'Accept': 'application/json, text/plain, */*',
+                  'Content-Type': 'application/json',
+                  'uid': localStorage.getItem("uid"), 
+                  'client': localStorage.getItem("client"), 
+                  'Access-Token': localStorage.getItem("accessToken") 
+                },
+                body: JSON.stringify({content:newTitle, detials:newDetails,})
+            }).then(function(response){
+                localStorage.setItem("uid", response.headers.get('Uid'));
+                localStorage.setItem("client", response.headers.get('Client'));
+              })
 
-    this.setState({
-      open: false
-    });
-
+        this.setState({
+          open: false
+        });
+    }
   }
 
   async deleteEvent() {
@@ -118,7 +124,7 @@ class Todo extends Component {
               <div>
                   <FormGroup>
                 <Label for="tedit" className="mr-sm-2">What needs to be done?</Label>
-                <Input id="tedit" defaultValue={this.props.item.title}/>
+                <Input id="tedit" defaultValue={this.props.item.title} className={this.state.inputClass}/>
               </FormGroup>
               <FormGroup>
                 <Label for="dedit" className="mr-sm-2">Additional instructions</Label>
