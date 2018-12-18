@@ -19,6 +19,11 @@ class Deserializer {
 		    var header = await response;
 		    localStorage.setItem("uid", header.headers.get('Uid'));
 		    localStorage.setItem("client", header.headers.get('Client'));
+	    } 
+
+	    if (await response.status === 401) {
+	    	localStorage.clear();
+	    	window.location.reload();
 	    }
 	    return response;
 
@@ -33,8 +38,8 @@ class Deserializer {
 		var userList = await response.json();
 		console.log(userList);
 		if (userList.length < 1) {
-		this.createLists();
-		window.location.reload();
+			this.createLists();
+			window.location.reload();
 		} else {
 			return userList;
 		}
