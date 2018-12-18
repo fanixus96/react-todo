@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Row, Col, Container, Button, Form, FormGroup, Label, Input, Alert, Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, DropdownItem} from 'reactstrap';
 import './main.css';
+import Deserializer from './Deserializer.js'
 
 class RegisterPage extends Component {
 
@@ -15,18 +16,10 @@ class RegisterPage extends Component {
 
 	 async CreateAccount() {
 	 		try {
-				let response = await fetch('https://tower-rails.herokuapp.com/auth', { 
-	    			method: 'POST',
-	      			headers: {
-		        		'Accept': 'application/json, text/plain, */*',
-		        		'Content-Type': 'application/json'
-	      			},
-	      			body: JSON.stringify({ email:document.getElementById('loginInput').value, 
+	 			 return await Deserializer.fetchPattern('https://tower-rails.herokuapp.com/auth','POST',{ email:document.getElementById('loginInput').value, 
 	      								   password: document.getElementById('passwordInput').value, 
 	      								   password_confirmation: document.getElementById('passwordConfirmationInput').value 
-	      			}) 
-	    		})
-	    		return response;
+	      			})
 	    	} catch (e) {
 	    		console.log(e)
 	    	}

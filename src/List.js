@@ -87,21 +87,7 @@ async currentList () {
         todos: newTodos
       });
       console.log(time)
-          fetch('https://tower-rails.herokuapp.com/task_lists/'+id+'/tasks', { 
-          method: 'POST',
-          headers: {
-            'Accept': 'application/json, text/plain, */*',
-            'Content-Type': 'application/json',
-            'uid': localStorage.getItem("uid"), 
-            'client': localStorage.getItem("client"), 
-            'Access-Token': localStorage.getItem("accessToken") 
-          },
-          body: JSON.stringify({content:itemValue, happens_at:time, details:detailsValue}) 
-      }).then(function(response){
-          localStorage.setItem("uid", response.headers.get('Uid'));
-          localStorage.setItem("client", response.headers.get('Client'));
-            
-          })
+      await Deserializer.fetchPattern('https://tower-rails.herokuapp.com/task_lists/'+id+'/tasks','POST',{content:itemValue, happens_at:time, details:detailsValue})
       document.getElementById("tvalue").value = "";
        this.setState({
         open: false

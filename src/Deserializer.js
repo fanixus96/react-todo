@@ -2,10 +2,10 @@ import moment from 'moment';
 
 class Deserializer {
 
-	static async userList() {
+	static async fetchPattern(link,method,body) {
 
-		 var response = await fetch('https://tower-rails.herokuapp.com/task_lists', { 
-	        method: 'GET',
+		var response = await fetch(link, { 
+	        method: method,
 	        headers: {
 	          'Accept': 'application/json, text/plain, */*',
 	          'Content-Type': 'application/json',
@@ -13,8 +13,19 @@ class Deserializer {
 	          'client': localStorage.getItem("client"), 
 	          'Access-Token': localStorage.getItem("accessToken") 
 	        },
+	        body: JSON.stringify(body)
 	    })
+	    if (link !== 'https://tower-rails.herokuapp.com/auth') {
+		    var header = await response;
+		    localStorage.setItem("uid", header.headers.get('Uid'));
+		    localStorage.setItem("client", header.headers.get('Client'));
+	    }
 	    return response;
+
+	}
+
+	static async userList() {
+		return await this.fetchPattern('https://tower-rails.herokuapp.com/task_lists', 'GET')
 	}
 
 	static async userListId() {
@@ -31,38 +42,15 @@ class Deserializer {
 	}
 
 	static async createLists() {
-
-		 var response = await fetch('https://tower-rails.herokuapp.com/task_lists', { 
-	        method: 'POST',
-	        headers: {
-	          'Accept': 'application/json, text/plain, */*',
-	          'Content-Type': 'application/json',
-	          'uid': localStorage.getItem("uid"), 
-	          'client': localStorage.getItem("client"), 
-	          'Access-Token': localStorage.getItem("accessToken") 
-	        },
-	        body: JSON.stringify({ task_list: { name: "test" }})
-	    })
-	    return response;
+		return await this.fetchPattern('https://tower-rails.herokuapp.com/task_lists','POST',{ task_list: { name: "test" }})
 	}
 	
 
     static async getTodos() {
     	var list = await this.userListId();
     	console.log(list)
-	    	var id = list[0].id;
-		    var response = await fetch('https://tower-rails.herokuapp.com/task_lists/'+id+'/tasks', { 
-		        method: 'Get',
-		        headers: {
-		          'Accept': 'application/json, text/plain, */*',
-		          'Content-Type': 'application/json',
-		          'uid': localStorage.getItem("uid"), 
-		          'client': localStorage.getItem("client"), 
-		          'Access-Token': localStorage.getItem("accessToken") 
-		        },
-		    })
-		    return response
-	
+	    var id = list[0].id;
+	    return await this.fetchPattern('https://tower-rails.herokuapp.com/task_lists/'+id+'/tasks','GET')
   	}
 
   	static async asyncTodos() {
