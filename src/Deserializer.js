@@ -15,16 +15,18 @@ class Deserializer {
 	        },
 	        body: JSON.stringify(body)
 	    })
-	    if (link !== 'https://tower-rails.herokuapp.com/auth') {
-		    var header = await response;
-		    localStorage.setItem("uid", header.headers.get('Uid'));
-		    localStorage.setItem("client", header.headers.get('Client'));
-	    } 
-
+	    var header = await response;
+	    localStorage.setItem("uid", header.headers.get('Uid'));
+	    localStorage.setItem("client", header.headers.get('Client'));
+	    if (header.headers.get('Access-Token') !== null && header.headers.get('Access-Token') !== '') {
+	    	localStorage.setItem("accessToken", header.headers.get('Access-Token'));
+	    }
+	     
 	    if (await response.status === 401) {
 	    	localStorage.clear();
 	    	window.location.reload();
 	    }
+
 	    return response;
 
 	}

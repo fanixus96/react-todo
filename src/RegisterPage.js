@@ -16,10 +16,22 @@ class RegisterPage extends Component {
 
 	 async CreateAccount() {
 	 		try {
-	 			 return await Deserializer.fetchPattern('https://tower-rails.herokuapp.com/auth','POST',{ email:document.getElementById('loginInput').value, 
-	      								   password: document.getElementById('passwordInput').value, 
-	      								   password_confirmation: document.getElementById('passwordConfirmationInput').value 
-	      			})
+		 		var response = await fetch('https://tower-rails.herokuapp.com/auth', { 
+			        method: 'POST',
+			        headers: {
+			          'Accept': 'application/json, text/plain, */*',
+			          'Content-Type': 'application/json',
+			          'uid': localStorage.getItem("uid"), 
+			          'client': localStorage.getItem("client"), 
+			          'Access-Token': localStorage.getItem("accessToken") 
+			        },
+			        body: JSON.stringify({ email:document.getElementById('loginInput').value, 
+		      								   password: document.getElementById('passwordInput').value, 
+		      								   password_confirmation: document.getElementById('passwordConfirmationInput').value 
+		      			})
+		    	})
+		    	return response;
+	 			 
 	    	} catch (e) {
 	    		console.log(e)
 	    	}

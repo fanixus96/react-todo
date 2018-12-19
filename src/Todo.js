@@ -56,21 +56,7 @@ class Todo extends Component {
         this.props.parent.setState({
           todos: items
         });
-
-         fetch('https://tower-rails.herokuapp.com/task_lists/'+listId+'/tasks/'+itemId, { 
-                method: 'PUT',
-                headers: {
-                  'Accept': 'application/json, text/plain, */*',
-                  'Content-Type': 'application/json',
-                  'uid': localStorage.getItem("uid"), 
-                  'client': localStorage.getItem("client"), 
-                  'Access-Token': localStorage.getItem("accessToken") 
-                },
-                body: JSON.stringify({content:newTitle, detials:newDetails,})
-            }).then(function(response){
-                localStorage.setItem("uid", response.headers.get('Uid'));
-                localStorage.setItem("client", response.headers.get('Client'));
-              })
+          await Deserializer.fetchPattern('https://tower-rails.herokuapp.com/task_lists/'+listId+'/tasks/'+itemId,'PUT',{content:newTitle, details:newDetails})
 
         this.setState({
           open: false
@@ -86,33 +72,9 @@ class Todo extends Component {
     console.log(this.props.item.id);
       if (idx!==-1){
         items.splice(idx,1)
-         fetch('https://tower-rails.herokuapp.com/task_lists/'+listId+'/tasks/'+itemId, { 
-            method: 'DELETE',
-            headers: {
-              'Accept': 'application/json, text/plain, */*',
-              'Content-Type': 'application/json',
-              'uid': localStorage.getItem("uid"), 
-              'client': localStorage.getItem("client"), 
-              'Access-Token': localStorage.getItem("accessToken") 
-            }
-        }).then(function(response){
-            localStorage.setItem("uid", response.headers.get('Uid'));
-            localStorage.setItem("client", response.headers.get('Client'));
-          })
+        await Deserializer.fetchPattern('https://tower-rails.herokuapp.com/task_lists/'+listId+'/tasks/'+itemId,'DELETE')
       }
       this.props.parent.setState({
-      todos: items
-    });
-  };
-
-  eventDone() {
-   var items = this.props.parent.state.todos;
-   var idx = items.indexOf(this.props.item)
-   if (idx!==-1){
-        items[idx].color="warning";
-      }
-
-    this.props.parent.setState({
       todos: items
     });
   };
@@ -121,7 +83,7 @@ class Todo extends Component {
     return (
       <div >
         <Col>
-          <ListGroup  onClick={this.eventDone.bind(this)}>
+          <ListGroup>
             <Alert isOpen={this.state.open}>
               <div>
                 <FormGroup>
@@ -136,7 +98,7 @@ class Todo extends Component {
                 <button onClick={this.closeAlert.bind(this)}>Cancel</button>
               </div>
             </Alert>
-            <ListGroupItem  color={this.props.item.color}>{this.props.item.title}</ListGroupItem>
+            <ListGroupItem color={this.props.item.color} className={"itemClass"}>{this.props.item.title}</ListGroupItem>
             <Row>
             <Col>
             <Button outline color="primary" onClick={this.openAlert.bind(this)} block>Edit</Button>

@@ -40,3 +40,7 @@ text-decoration: line-through;
 .blank {
 	border-color: red;
 }
+
+.itemClass {
+	word-wrap: break-word;
+}
