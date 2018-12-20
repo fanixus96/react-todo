@@ -11,13 +11,12 @@ import './main.css';
 
 class List extends Component {
 
-    async componentWillMount() {
+  async componentWillMount() {
     if (localStorage.getItem("uid") === "null" || localStorage.getItem("uid") === null) {
-       this.setState({
+      this.setState({
         listClass: "afterClicked",
-        
       });
-       this.props.history.push("/")
+      this.props.history.push("/")
     } else {
       this.loadRemoteTodos()
       this.setState({
@@ -48,9 +47,9 @@ class List extends Component {
 async loadRemoteTodos() {
   var RemoteTodos = await Deserializer.asyncTodos();
   this.setState({
-        todos: RemoteTodos,
-        loading: false,
-      });
+    todos: RemoteTodos,
+    loading: false,
+  });
 }
 
 async currentList () {
@@ -62,7 +61,7 @@ async currentList () {
   openAlert() {
     this.setState({
       open: true
-    })
+    });
   }
 
   dateChange(date){
@@ -79,19 +78,18 @@ async currentList () {
         inputClass: "blank"
       })
     } else {
-      var detailsValue = document.getElementById("dvalue").value;
-      var newTodos = this.state.todos.slice(0);
-      var time = moment(this.state.startDate).format('YYYY-MM-DD');
-      newTodos.push({title:itemValue, details:detailsValue, color:"info", start:time});
-      this.setState({
-        todos: newTodos
-      });
-      console.log(time)
-      await Deserializer.fetchPattern('https://tower-rails.herokuapp.com/task_lists/'+id+'/tasks','POST',{content:itemValue, happens_at:time, details:detailsValue})
-      document.getElementById("tvalue").value = "";
-       this.setState({
-        open: false
-      })
+        var detailsValue = document.getElementById("dvalue").value;
+        var newTodos = this.state.todos.slice(0);
+        var time = moment(this.state.startDate).format('YYYY-MM-DD');
+        newTodos.push({title:itemValue, details:detailsValue, color:"info", start:time});
+        this.setState({
+          todos: newTodos
+        });
+        await Deserializer.fetchPattern('https://tower-rails.herokuapp.com/task_lists/'+id+'/tasks','POST',{content:itemValue, happens_at:time, details:detailsValue})
+        document.getElementById("tvalue").value = "";
+        this.setState({
+          open: false
+        })
     }
 
   }
@@ -118,10 +116,10 @@ async currentList () {
   }
 
   toggleNavbar() {
-      this.setState({
-        collapsed: !this.state.collapsed
-      });
-    }
+    this.setState({
+      collapsed: !this.state.collapsed
+    });
+  }
 
   render() {
     var self = this;

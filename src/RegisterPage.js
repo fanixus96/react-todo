@@ -12,33 +12,34 @@ class RegisterPage extends Component {
 	      errorMessage: "error",
 	      collapsed: false,
 	    }
-  }
+  	}
 
-	 async CreateAccount() {
-	 		try {
-		 		var response = await fetch('https://tower-rails.herokuapp.com/auth', { 
-			        method: 'POST',
-			        headers: {
-			          'Accept': 'application/json, text/plain, */*',
-			          'Content-Type': 'application/json',
-			          'uid': localStorage.getItem("uid"), 
-			          'client': localStorage.getItem("client"), 
-			          'Access-Token': localStorage.getItem("accessToken") 
-			        },
-			        body: JSON.stringify({ email:document.getElementById('loginInput').value, 
-		      								   password: document.getElementById('passwordInput').value, 
-		      								   password_confirmation: document.getElementById('passwordConfirmationInput').value 
-		      			})
-		    	})
-		    	return response;
-	 			 
-	    	} catch (e) {
-	    		console.log(e)
-	    	}
+	async CreateAccount() {
+ 		try {
+	 		var response = await fetch('https://tower-rails.herokuapp.com/auth', { 
+		        method: 'POST',
+		        headers: {
+		          'Accept': 'application/json, text/plain, */*',
+		          'Content-Type': 'application/json',
+		          'uid': localStorage.getItem("uid"), 
+		          'client': localStorage.getItem("client"), 
+		          'Access-Token': localStorage.getItem("accessToken") 
+		        },
+		        body: JSON.stringify({
+		        	email:document.getElementById('loginInput').value, 
+	      			password: document.getElementById('passwordInput').value, 
+	      			password_confirmation: document.getElementById('passwordConfirmationInput').value 
+	      			})
+	    	})
+	    	return response;
+ 		
+    	} catch(e) {
+    		console.log(e)
+    	}
 	}
 
 	async jsonHandling(){
-		    let response = await this.CreateAccount();
+		    var response = await this.CreateAccount();
 		    var info = await response.json();
 		    return info;
 	}
@@ -46,33 +47,30 @@ class RegisterPage extends Component {
 	async reactionToResponse() {
 		var fetchInfo = await this.jsonHandling()
 		if (fetchInfo.status === "success") {
-
 			window.location.reload();
-
-		}	else {
-				this.setState({
-      				visible: true,
-      				errorMessage:fetchInfo.errors.full_messages.join('. '), 
-    			});
+		} else {
+			this.setState({
+  				visible: true,
+  				errorMessage:fetchInfo.errors.full_messages.join('. '), 
+			})
 		}
 	}
-
 
 	backToLoginPage() {
 		window.location.reload();
 	}
 
-	 enterPressed(event) {
-	    var code = event.keyCode || event.which;
+	enterPressed(event) {
+		var code = event.keyCode || event.which;
 	    if(code === 13) { 
-	      this.reactionToResponse();
+	    	this.reactionToResponse();
 	    } 
 	}
 
 	toggleNavbar() {
-	    this.setState({
-	      collapsed: !this.state.collapsed
-	    });
+		this.setState({
+	    	collapsed: !this.state.collapsed
+	    })
   	}
 
 	render() {

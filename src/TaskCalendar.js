@@ -19,7 +19,6 @@ class TaskCalendar extends Component {
   }
 
    showFullTodo(item) {
-    console.log(item);
     this.props.parent.setState({
       visible: true,
       details: item.details,
