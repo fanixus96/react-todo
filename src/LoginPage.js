@@ -8,10 +8,9 @@ class LoginPage extends Component {
 
   componentWillMount() {
     if (localStorage.getItem("uid") === "null" || localStorage.getItem("uid") === null) {
-       this.setState({
+      this.setState({
         buttonStyle: "beforeClicked"
       });
-       console.log("beforeClicked")
     } else {
       this.setState({
         buttonStyle: "afterClicked",
@@ -40,28 +39,25 @@ class LoginPage extends Component {
   	
     fetch('https://tower-rails.herokuapp.com/auth/sign_in', { 
     	method: 'POST',
-      	headers: {
-	        'Accept': 'application/json, text/plain, */*',
-	        'Content-Type': 'application/json'
-      	},
-      	body: JSON.stringify({ email:document.getElementById('loginInput').value, password: document.getElementById('passwordInput').value }) 
+      headers: {
+	     'Accept': 'application/json, text/plain, */*',
+	     'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ email:document.getElementById('loginInput').value, password: document.getElementById('passwordInput').value }) 
     }).then(function(response){
     		localStorage.setItem("uid", response.headers.get('Uid'));
     		localStorage.setItem("accessToken", response.headers.get('Access-Token'));
     		localStorage.setItem("client", response.headers.get('Client'));
-        	console.log(localStorage.getItem("accessToken"))
-
-	        if (localStorage.getItem("accessToken") === "null") {
-            document.getElementById("passwordInput").value = "";  
-	        	console.log("wrong credentials")
-	        	self.setState({
-	        		visible: true,
-	        	})
-	        } else {
-	    			window.location.reload();
-	    		}
-        })
-
+        if (localStorage.getItem("accessToken") === "null") {
+          document.getElementById("passwordInput").value = "";  
+        	console.log("wrong credentials")
+        	self.setState({
+        		visible: true,
+        	})
+        } else {
+    			window.location.reload();
+    		}
+      })
   }
 
   enterPressed(event) {
@@ -69,7 +65,7 @@ class LoginPage extends Component {
     if(code === 13) { 
       this.buttonColorChange();
     } 
-}
+  }
 
  toggleNavbar() {
     this.setState({
