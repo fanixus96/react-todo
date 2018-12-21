@@ -20,7 +20,6 @@ class List extends Component {
     } else {
       this.loadRemoteTodos()
       this.setState({
-        listClass: "list",
         loading: true,
       });
     }
@@ -34,7 +33,6 @@ class List extends Component {
       todos1: [],
       open: false,
       startDate: moment(),
-      listClass: "list",
       visible: false,
       title: "",
       details: "",
@@ -134,79 +132,70 @@ async currentList () {
         )
     } else {
       return (
-        <div className={this.state.listClass}>
-          <Container>
-            <Row>
-              <Col>
-                <Navbar color="faded" light>
-                  <NavbarBrand className="mr-auto">react todo app</NavbarBrand>
-                  <NavbarToggler onClick={this.toggleNavbar.bind(this)} className="mr-2" />
-                  <Collapse isOpen={this.state.collapsed} navbar>
-                    <Nav navbar>
-                      <NavItem>
-                        <DropdownItem onClick={this.signOut.bind(this)}>Logout</DropdownItem>
-                      </NavItem>
-                    </Nav>
-                  </Collapse>
-                </Navbar>
-              </Col>
-            </Row>
-            <Popup open={this.state.open} onClose={this.backgroundClicked.bind(this)}>
-            <Form >
-              <FormGroup>
-                <Label for="tvalue" className="mr-sm-2">What needs to be done?</Label>
-                <Input id="tvalue" className={this.state.inputClass}/>
-              </FormGroup>
-              <FormGroup>
-                <Label for="dvalue" className="mr-sm-2">Additional instructions</Label>
-                <Input id="dvalue"/>
-              </FormGroup>
-              <FormGroup>
-                <Label for="tcalendar" className="mr-sm-2">When?</Label>
-                <div id="tcalendar">
-                  <DatePicker
+        <div className="container">
+          <div className="row">
+            <div className="col-md-12">
+              <Navbar color="faded" light>
+                <NavbarBrand className="mr-auto">react todo app</NavbarBrand>
+                <NavbarToggler onClick={this.toggleNavbar.bind(this)} className="mr-2" />
+                <Collapse isOpen={this.state.collapsed} navbar>
+                  <Nav navbar>
+                    <NavItem>
+                      <DropdownItem onClick={this.signOut.bind(this)}>Logout</DropdownItem>
+                    </NavItem>
+                  </Nav>
+                </Collapse>
+              </Navbar>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-4 column">
+              <Popup open={this.state.open} onClose={this.backgroundClicked.bind(this)}>
+              <Form >
+                <FormGroup>
+                  <Label for="tvalue" className="mr-sm-2">What needs to be done?</Label>
+                  <Input id="tvalue" className={this.state.inputClass}/>
+                </FormGroup>
+                <FormGroup>
+                  <Label for="dvalue" className="mr-sm-2">Additional instructions</Label>
+                  <Input id="dvalue"/>
+                </FormGroup>
+                <FormGroup>
+                  <Label for="tcalendar" className="mr-sm-2">When?</Label>
+                  <div id="tcalendar">
+                    <DatePicker
                     dateFormat="YYYY-MM-DD"
                     selected={this.state.startDate}
-                    onChange={this.dateChange.bind(this)}
-                  />
-                </div>
-              </FormGroup>
-              <Button onClick={this.createTodo.bind(this)}> Create </Button>
+                    onChange={this.dateChange.bind(this)} 
+                    />
+                  </div>
+                </FormGroup>
+                <Button onClick={this.createTodo.bind(this)}> Create </Button>
               </Form>
               </Popup>
-            <Row>
-              <Col className="column">
-                <ListGroup>
-                  <ListGroupItem>
-                    {this.state.todos.map(function(item) {
-                      return <Todo parent={self} item={item} key={item.id}/>
-                  	})}
-                  </ListGroupItem>
-                    <Button outline color="primary" size="lg" onClick={this.openAlert.bind(this)}> New </Button>
-                  </ListGroup>
-                </Col>
-                <Col>
-                  <TaskCalendar events={this.state.todos} parent={self} />
-                  <Alert color="success" isOpen={this.state.visible} toggle={this.onDismiss.bind(this)}>
-                    <h4 className="alert-heading">Task details:</h4>
-                    <p>
-                      {this.state.title}
-                    </p>
-                    <hr />
-                    <p className="mb-0">
-                      {this.state.details}
-                    </p>
-                </Alert>
-                </Col>
-                <Col sm="1" >
-            	  </Col>
-            </Row>
-            <Row/>
-            </Container>
+              {this.state.todos.map(function(item) {
+                return <Todo parent={self} item={item} key={item.id}/>
+              })}
+              <Button outline color="primary" size="lg" onClick={this.openAlert.bind(this)}> New </Button>
+            </div>
+            <div className="col-md-8 column">
+              <TaskCalendar events={this.state.todos} parent={self} />
+              <Alert color="success" isOpen={this.state.visible} toggle={this.onDismiss.bind(this)}>
+                <h4 className="alert-heading">Task details:</h4>
+                <p>
+                  {this.state.title}
+                </p>
+                <hr />
+                <p className="mb-0">
+                  {this.state.details}
+                </p>
+              </Alert>
+            </div>
+          </div>
         </div>
       );
+    }
   }
-}
 }
 
 export default List;

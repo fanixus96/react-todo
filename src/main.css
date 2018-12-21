@@ -1,16 +1,12 @@
+
 .notDone {
-
-
 }
 
 .done {
-
-text-decoration: line-through;
-
+	text-decoration: line-through;
 }
 
-.beforeClicked {
-	
+.beforeClicked {	
 }
 
 .afterClicked {
@@ -27,14 +23,12 @@ text-decoration: line-through;
   transform: translate(-50%,-50%);
 }   
 
-.column
-{
+.column {
   height:80vh;
   overflow:auto;
 }
 
 .default {
-
 }
 
 .blank {
