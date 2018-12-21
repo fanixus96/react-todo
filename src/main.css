@@ -23,8 +23,9 @@
   transform: translate(-50%,-50%);
 }   
 
+
 .column {
-  height:80vh;
+  height:68vh;
   overflow:auto;
 }
 

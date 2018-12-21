@@ -28,7 +28,6 @@ class Deserializer {
 	    }
 
 	    return response;
-
 	}
 
 	static async userList() {
@@ -45,7 +44,6 @@ class Deserializer {
 		} else {
 			return userList;
 		}
-		
 	}
 
 	static async createLists() {

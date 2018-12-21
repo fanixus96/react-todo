@@ -21,7 +21,7 @@ class List extends Component {
       this.loadRemoteTodos()
       this.setState({
         loading: true,
-        listClass: "list",
+        listClass: "list container",
       });
     }
   }
@@ -40,7 +40,7 @@ class List extends Component {
       collapsed: false,
       loading: false,
       inputClass: "default",
-      listClass: "list",
+      listClass: "list container",
     };
   }
 
@@ -134,11 +134,14 @@ async currentList () {
         )
     } else {
       return (
-        <div className="container ${this.state.listClass}">
+        <div className={this.state.listClass}>
           <div className="row">
             <div className="col-md-12">
-              <Navbar color="faded" light>
-                <NavbarBrand className="mr-auto">react todo app</NavbarBrand>
+              <div className="navbar">
+                <a className="navbar-brand mb-0">React Todo App</a>
+                
+                <span className="glyphicon glyphicon-log-out" aria-hidden="true"></span>
+
                 <NavbarToggler onClick={this.toggleNavbar.bind(this)} className="mr-2" />
                 <Collapse isOpen={this.state.collapsed} navbar>
                   <Nav navbar>
@@ -147,7 +150,7 @@ async currentList () {
                     </NavItem>
                   </Nav>
                 </Collapse>
-              </Navbar>
+              </div>
             </div>
           </div>
           <div className="row">
