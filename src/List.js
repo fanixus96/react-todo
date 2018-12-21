@@ -139,8 +139,7 @@ async currentList () {
             <div className="col-md-12">
               <div className="navbar">
                 <a className="navbar-brand mb-0">React Todo App</a>
-                
-                <span className="glyphicon glyphicon-log-out" aria-hidden="true"></span>
+                <span className="fas fa-sign-out-alt"></span>
 
                 <NavbarToggler onClick={this.toggleNavbar.bind(this)} className="mr-2" />
                 <Collapse isOpen={this.state.collapsed} navbar>
