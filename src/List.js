@@ -21,6 +21,7 @@ class List extends Component {
       this.loadRemoteTodos()
       this.setState({
         loading: true,
+        listClass: "list",
       });
     }
   }
@@ -39,6 +40,7 @@ class List extends Component {
       collapsed: false,
       loading: false,
       inputClass: "default",
+      listClass: "list",
     };
   }
 
@@ -132,7 +134,7 @@ async currentList () {
         )
     } else {
       return (
-        <div className="container">
+        <div className="container ${this.state.listClass}">
           <div className="row">
             <div className="col-md-12">
               <Navbar color="faded" light>
