@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
-import { Row, Col, Container, Button, Form, FormGroup, Label, Input, Alert, Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, DropdownItem} from 'reactstrap';
 import './main.css';
-import Deserializer from './Deserializer.js'
 
 class RegisterPage extends Component {
 
 	constructor(props) {
 	    super(props);
 	    this.state = {
-	      visible: false,
 	      errorMessage: "error",
 	      collapsed: false,
 	    }
+  	}
+  	componentDidMount() {
+  		window.$('#alertMessage').hide()
   	}
 
 	async CreateAccount() {
@@ -49,8 +49,8 @@ class RegisterPage extends Component {
 		if (fetchInfo.status === "success") {
 			window.location.reload();
 		} else {
+			window.$('#alertMessage').show();
 			this.setState({
-  				visible: true,
   				errorMessage:fetchInfo.errors.full_messages.join('. '), 
 			})
 		}
@@ -75,56 +75,46 @@ class RegisterPage extends Component {
 
 	render() {
     	return (
-    		<div>
-    			<Container>
-    				<Row>
-    					<Col>
-               				<Navbar color="faded" light>
-				                <NavbarBrand className="mr-auto">react todo app</NavbarBrand>
-				                <NavbarToggler onClick={this.toggleNavbar.bind(this)} className="mr-2" />
-				                <Collapse isOpen={this.state.collapsed} navbar>
-				                  <Nav navbar>
-				                    <NavItem>
-				                      <DropdownItem onClick={this.backToLoginPage.bind(this)}>Login</DropdownItem>
-				                    </NavItem>
-				                  </Nav>
-				                </Collapse>
-              				</Navbar>
-            			</Col>
-    				</Row>
-    				<Row>
-	    				<Col/>
-		    			<Col>
-			      			<Form > 
-			      				<FormGroup>
-				      				<Label for="loginInput" className="mr-sm-2"/>
-				      				<Input id="loginInput" placeholder="Your email"/>
-				        		</FormGroup>
-				        		<FormGroup>
-				      				<Label for="passwordInput" className="mr-sm-2"/>
-				      				<Input id="passwordInput" placeholder="password" type="password"/>
-				        		</FormGroup>
-				        		<FormGroup>
-				      				<Label for="passwordConfirmationInput" className="mr-sm-2"/>
-				      				<Input type="passwordConfirmationInput" 
+    		<div className="container">
+    				<div className="row">
+    					<div className="col-md-12">
+		              		<nav className="navbar">
+		                		<span className="navbar-brand mb-0">React Todo App</span>
+		                		<span onClick={this.backToLoginPage.bind(this)} className="btn btn-secondary justify-content-end">Login</span>
+		              		</nav>
+            			</div>
+    				</div>
+    				<div className="row">
+	    				<div className="col"/>
+		    			<div className="col">
+			      			<form> 
+			      				<div className="form-group">
+				      				<label for="loginInput"/>
+				      				<input id="loginInput" className="form-control" placeholder="Your email"/>
+				        		</div>
+				        		<div className="form-group">
+				      				<label for="passwordInput"/>
+				      				<input id="passwordInput" className="form-control" placeholder="password" type="password"/>
+				        		</div>
+				        		<div className="form-group">
+				      				<label for="passwordConfirmationInput"/>
+				      				<input type="password" 
 				      					   id="passwordConfirmationInput" 
-				      					   placeholder="password confirmation" 
-				      					   type="password" 
+				      					   placeholder="password confirmation"  
 				      					   onKeyPress={this.enterPressed.bind(this)}
+				      					   className="form-control"
 				      				/>
-				      				<Alert color="danger" isOpen={this.state.visible}>
+				        		</div>
+				        		<div className="alert alert-danger" id="alertMessage" >
 			        					{this.state.errorMessage}
-			      					</Alert>
-				        		</FormGroup>
-				        		<Button id="loginButton" onClick={this.reactionToResponse.bind(this)}>
+			      				</div>
+				        		<div className="btn btn-secondary" id="loginButton" onClick={this.reactionToResponse.bind(this)}>
 			                	Create account
-					        	</Button>
-			        		</Form>
-		        		</Col>
-		        		<Col>
-		        		</Col>
-	        		</Row>
-	        	</Container>
+					        	</div>
+			        		</form>
+		        		</div>
+		        		<div className="col"/>
+	        		</div>
     		</div>
     	)
     }

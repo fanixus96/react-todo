@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Row, Col, Container, Button, Form, FormGroup, Label, Input, Alert, Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, DropdownItem} from 'reactstrap';
 import './main.css';
 
 
@@ -9,13 +8,17 @@ class LoginPage extends Component {
   componentWillMount() {
     if (localStorage.getItem("uid") === "null" || localStorage.getItem("uid") === null) {
       this.setState({
-        buttonStyle: "beforeClicked"
+        buttonStyle: "beforeClicked container"
       });
     } else {
       this.setState({
         buttonStyle: "afterClicked",
       });
     }
+  }
+
+  componentDidMount() {
+    window.$('#wrong-pass').hide();
   }
 
 	constructor(props) {
@@ -35,8 +38,6 @@ class LoginPage extends Component {
   }
 
   buttonColorChange() {
-  	var self = this;
-  	
     fetch('https://tower-rails.herokuapp.com/auth/sign_in', { 
     	method: 'POST',
       headers: {
@@ -50,10 +51,7 @@ class LoginPage extends Component {
     		localStorage.setItem("client", response.headers.get('Client'));
         if (localStorage.getItem("accessToken") === "null") {
           document.getElementById("passwordInput").value = "";  
-        	console.log("wrong credentials")
-        	self.setState({
-        		visible: true,
-        	})
+        	window.$('#wrong-pass').show();
         } else {
     			window.location.reload();
     		}
@@ -67,58 +65,41 @@ class LoginPage extends Component {
     } 
   }
 
- toggleNavbar() {
-    this.setState({
-      collapsed: !this.state.collapsed
-    });
+  render() {
+    return (
+      <div className={this.state.buttonStyle}>
+        <div className="row">
+          <div className="col-md-12">
+            <nav className="navbar">
+              <span className="navbar-brand mb-0">React Todo App</span>
+              <span onClick={this.navigateToRegisterPage.bind(this)} className="btn btn-secondary justify-content-end">Register</span>
+            </nav>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col"/>
+          <div className="col">
+            <form> 
+              <div className="form-group">
+                <label className="mr-sm-2">Login</label>
+                <input className="form-control" id="loginInput"/>
+              </div>
+              <div className="form-group">
+                <label className="mr-sm-2">Password</label>
+                <input className="form-control" type="password" id="passwordInput" onKeyPress={this.enterPressed.bind(this)}/>
+                <div className="alert alert-danger" id="wrong-pass">
+                The username or password you entered did not match our records. Please double-check and try again.
+                </div>
+              </div>
+              <div className="btn btn-secondary" id="loginButton"  onClick={this.buttonColorChange.bind(this)}>
+                Login
+              </div>
+            </form>
+          </div>
+          <div className="col"/>
+        </div>
+      </div>
+    );
   }
-
-	render() {
-    	return (
-    		<Container className={this.state.buttonStyle}>
-          <Row>
-            <Col>
-               <Navbar color="faded" light>
-                <NavbarBrand className="mr-auto">react todo app</NavbarBrand>
-                <NavbarToggler onClick={this.toggleNavbar.bind(this)} className="mr-2" />
-                <Collapse isOpen={this.state.collapsed} navbar>
-                  <Nav navbar>
-                    <NavItem>
-                      <DropdownItem onClick={this.navigateToRegisterPage.bind(this)}>Register</DropdownItem>
-                    </NavItem>
-                  </Nav>
-                </Collapse>
-              </Navbar>
-            </Col>
-          </Row>
-    			<Row>
-    				<Col/>
-	    			<Col xs="6" sm="6">
-		      			<Form > 
-		      				<FormGroup>
-			      				<Label for="loginInput" className="mr-sm-2">Login</Label>
-			      				<Input id="loginInput"/>
-			        		</FormGroup>
-			        		<FormGroup>
-			      				<Label for="passwordInput" className="mr-sm-2">Password</Label>
-			      				<Input type="password" id="passwordInput" onKeyPress={this.enterPressed.bind(this)}/>
-			      				<Alert color="danger" isOpen={this.state.visible} toggle={this.onDismiss}>
-		        					The username or password you entered did not match our records. Please double-check and try again.
-		      					</Alert>
-			        		</FormGroup>
-			        		<Button id="loginButton"  onClick={this.buttonColorChange.bind(this)}>
-		                	Login
-				        	</Button>
-		        		</Form>
-	        		</Col>
-  	        		<Col>
-  	        		</Col>
-              </Row>
-        		</Container>
- 
-    	);
-	}
-
-
 }
 export default LoginPage;

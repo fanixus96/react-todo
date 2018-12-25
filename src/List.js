@@ -5,7 +5,6 @@ import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import TaskCalendar from './TaskCalendar.js';
 import Deserializer from './Deserializer.js'
-import { Row, Col, Container, Button, Form, FormGroup, Label, Input, Alert, Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, DropdownItem, ListGroup, ListGroupItem} from 'reactstrap';
 import { BounceLoader } from 'react-spinners';
 import './main.css';
 
@@ -39,7 +38,7 @@ class List extends Component {
       details: "",
       collapsed: false,
       loading: false,
-      inputClass: "default",
+      inputClass: "default form-control",
       listClass: "list container",
     };
   }
@@ -59,6 +58,7 @@ async currentList () {
 }
 
   openAlert() {
+    window.$('#wrong-pass').show();
     this.setState({
       open: true
     });
@@ -73,15 +73,15 @@ async currentList () {
   async createTodo() {
     var id = await this.currentList();
     var itemValue = document.getElementById("tvalue").value;
-    if (itemValue.length == 0) {
+    if (itemValue.length === 0) {
       this.setState({
-        inputClass: "blank"
+        inputClass: "blank form-control"
       })
     } else {
         var detailsValue = document.getElementById("dvalue").value;
         var newTodos = this.state.todos.slice(0);
         var time = moment(this.state.startDate).format('YYYY-MM-DD');
-        newTodos.push({title:itemValue, details:detailsValue, color:"info", start:time});
+        newTodos.push({title:itemValue, details:detailsValue, start:time});
         this.setState({
           todos: newTodos
         });
@@ -133,71 +133,54 @@ async currentList () {
         </div>
         )
     } else {
-      return (
-        <div className={this.state.listClass}>
-          <div className="row">
-            <div className="col-md-12">
-              <div className="navbar">
-                <a className="navbar-brand mb-0">React Todo App</a>
-                <span className="fas fa-sign-out-alt"></span>
-
-                <NavbarToggler onClick={this.toggleNavbar.bind(this)} className="mr-2" />
-                <Collapse isOpen={this.state.collapsed} navbar>
-                  <Nav navbar>
-                    <NavItem>
-                      <DropdownItem onClick={this.signOut.bind(this)}>Logout</DropdownItem>
-                    </NavItem>
-                  </Nav>
-                </Collapse>
+        return (
+          <div className={this.state.listClass}>
+            <div className="row">
+              <div className="col-md-12">
+                <nav className="navbar">
+                  <span className="navbar-brand mb-0">React Todo App</span>
+                  <span onClick={this.signOut.bind(this)} className="btn fas fa-sign-out-alt justify-content-end"></span>
+                </nav>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-4">
+                <Popup open={this.state.open} onClose={this.backgroundClicked.bind(this)}>
+                  <form >
+                    <div className="form-group">
+                      <label>What needs to be done?</label>
+                      <input id="tvalue" className={this.state.inputClass}/>
+                    </div>
+                    <div className="form-group">
+                      <label>Additional instructions</label>
+                      <input id="dvalue" className="form-control"/>
+                    </div>
+                    <div className="form-group">
+                      <label>When?</label>
+                      <div id="tcalendar">
+                        <DatePicker
+                          dateFormat="YYYY-MM-DD"
+                          selected={this.state.startDate}
+                          onChange={this.dateChange.bind(this)} 
+                        />
+                      </div>
+                    </div>
+                    <div className="btn btn-secondary" onClick={this.createTodo.bind(this)}>Create</div>
+                  </form>
+                </Popup>
+                <div className="column">
+                  {this.state.todos.map(function(item) {
+                    return <Todo parent={self} item={item} key={item.id}/>
+                  })}
+                </div>
+                <div type="button" className="btn btn-primary btn-lg btn-block" onClick={this.openAlert.bind(this)}> New </div>
+              </div>
+              <div className="col-md-8 column">
+                <TaskCalendar events={this.state.todos} parent={self} />
               </div>
             </div>
           </div>
-          <div className="row">
-            <div className="col-md-4 column">
-              <Popup open={this.state.open} onClose={this.backgroundClicked.bind(this)}>
-              <Form >
-                <FormGroup>
-                  <Label for="tvalue" className="mr-sm-2">What needs to be done?</Label>
-                  <Input id="tvalue" className={this.state.inputClass}/>
-                </FormGroup>
-                <FormGroup>
-                  <Label for="dvalue" className="mr-sm-2">Additional instructions</Label>
-                  <Input id="dvalue"/>
-                </FormGroup>
-                <FormGroup>
-                  <Label for="tcalendar" className="mr-sm-2">When?</Label>
-                  <div id="tcalendar">
-                    <DatePicker
-                    dateFormat="YYYY-MM-DD"
-                    selected={this.state.startDate}
-                    onChange={this.dateChange.bind(this)} 
-                    />
-                  </div>
-                </FormGroup>
-                <Button onClick={this.createTodo.bind(this)}> Create </Button>
-              </Form>
-              </Popup>
-              {this.state.todos.map(function(item) {
-                return <Todo parent={self} item={item} key={item.id}/>
-              })}
-              <Button outline color="primary" size="lg" onClick={this.openAlert.bind(this)}> New </Button>
-            </div>
-            <div className="col-md-8 column">
-              <TaskCalendar events={this.state.todos} parent={self} />
-              <Alert color="success" isOpen={this.state.visible} toggle={this.onDismiss.bind(this)}>
-                <h4 className="alert-heading">Task details:</h4>
-                <p>
-                  {this.state.title}
-                </p>
-                <hr />
-                <p className="mb-0">
-                  {this.state.details}
-                </p>
-              </Alert>
-            </div>
-          </div>
-        </div>
-      );
+        );
     }
   }
 }

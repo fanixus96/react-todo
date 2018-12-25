@@ -26,13 +26,11 @@ class TaskCalendar extends Component {
     })
   }
 
-
   render() {
     return (
       <FullCalendar
         events={this.props.events}
         dayClick={this.addEvent.bind(this)}
-        eventClick={this.showFullTodo.bind(this)}
       />
     );
   }
