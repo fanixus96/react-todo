@@ -78,23 +78,22 @@ async currentList () {
         inputClass: "blank form-control"
       })
     } else {
-        var detailsValue = document.getElementById("dvalue").value;
-        var newTodos = this.state.todos.slice(0);
         var time = moment(this.state.startDate).format('YYYY-MM-DD');
-        newTodos.push({title:itemValue, details:detailsValue, start:time});
-        this.setState({
-          todos: newTodos
-        });
-        await Deserializer.fetchPattern('https://tower-rails.herokuapp.com/task_lists/'+id+'/tasks','POST',{content:itemValue, happens_at:time, details:detailsValue})
+        var newTodos = this.state.todos.slice(0);
+        var request = await Deserializer.fetchPattern('https://tower-rails.herokuapp.com/task_lists/'+id+'/tasks','POST',{content:itemValue, happens_at:time, details:"notDone"})
+        var itemId = await request.json();
         document.getElementById("tvalue").value = "";
         this.setState({
           open: false
         })
+        newTodos.push({id:itemId.id, title:itemValue, start:time});
+        this.setState({
+          todos: newTodos
+        });
+        
     }
-
   }
 
- 
   backgroundClicked() {
     this.setState({
       open: false
@@ -149,7 +148,7 @@ async currentList () {
                   <form >
                     <div className="form-group">
                       <label>What needs to be done?</label>
-                      <input id="tvalue" className={this.state.inputClass}/>
+                      <input id="tvalue" className={this.state.inputClass} maxLength={244}/>
                     </div>
                     <div className="form-group">
                       <label>Additional instructions</label>

@@ -13,7 +13,6 @@ class Todo extends Component {
     };
   }
 
- 
   openAlert() {
     var id = this.props.item.id;
     window.$('#'+id+'').collapse('show');
@@ -24,7 +23,10 @@ class Todo extends Component {
 
   closeAlert() {
     var id = this.props.item.id;
+    var newTitle = this.props.item.content;
+    var doneId = "done"+id+""
     window.$('#'+id+'').collapse('hide');
+    document.getElementById(doneId).value = newTitle;
   }
 
   async currentList () {
@@ -52,7 +54,10 @@ class Todo extends Component {
           todos: items
         });
         await Deserializer.fetchPattern('https://tower-rails.herokuapp.com/task_lists/'+listId+'/tasks/'+itemId,'PUT',{content:newTitle})
-        this.closeAlert();
+        var id = this.props.item.id;
+        var doneId = "done"+id+""
+        window.$('#'+id+'').collapse('hide');
+        document.getElementById(doneId).value = newTitle;
     }
   }
 
@@ -61,7 +66,6 @@ class Todo extends Component {
     var items = this.props.parent.state.todos;
     var idx = items.indexOf(this.props.item)
     var itemId = this.props.item.id;
-    console.log(this.props.item.id);
       if (idx!==-1){
         items.splice(idx,1)
         await Deserializer.fetchPattern('https://tower-rails.herokuapp.com/task_lists/'+listId+'/tasks/'+itemId,'DELETE')
@@ -69,7 +73,7 @@ class Todo extends Component {
       this.props.parent.setState({
       todos: items
     });
-  };
+  }
 
   render() {
     var collapseId = this.props.item.id
@@ -80,7 +84,7 @@ class Todo extends Component {
           <div className="collapse" id={collapseId}>
             <div className="form-group">
               <label>What needs to be done?</label>
-              <input id={doneId} className={this.state.inputClass}  defaultValue={this.props.item.title}/>
+              <input id={doneId} className={this.state.inputClass}  defaultValue={this.props.item.title} maxLength={244}/>
             </div>
             <button onClick={this.editEvent.bind(this)}>Save</button>
             <button onClick={this.closeAlert.bind(this)}>Cancel</button>
