@@ -151,10 +151,6 @@ async currentList () {
                       <input id="tvalue" className={this.state.inputClass} maxLength={244}/>
                     </div>
                     <div className="form-group">
-                      <label>Additional instructions</label>
-                      <input id="dvalue" className="form-control"/>
-                    </div>
-                    <div className="form-group">
                       <label>When?</label>
                       <div id="tcalendar">
                         <DatePicker

@@ -89,15 +89,12 @@ class RegisterPage extends Component {
 		    			<div className="col">
 			      			<form> 
 			      				<div className="form-group">
-				      				<label for="loginInput"/>
 				      				<input id="loginInput" className="form-control" placeholder="Your email"/>
 				        		</div>
 				        		<div className="form-group">
-				      				<label for="passwordInput"/>
 				      				<input id="passwordInput" className="form-control" placeholder="password" type="password"/>
 				        		</div>
 				        		<div className="form-group">
-				      				<label for="passwordConfirmationInput"/>
 				      				<input type="password" 
 				      					   id="passwordConfirmationInput" 
 				      					   placeholder="password confirmation"  

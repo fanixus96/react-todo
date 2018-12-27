@@ -22,11 +22,13 @@ class Todo extends Component {
   }
 
   closeAlert() {
+    var items = this.props.parent.state.todos;
+    var idx = items.indexOf(this.props.item)
+    var title = items[idx].title;
     var id = this.props.item.id;
-    var newTitle = this.props.item.content;
     var doneId = "done"+id+""
     window.$('#'+id+'').collapse('hide');
-    document.getElementById(doneId).value = newTitle;
+    document.getElementById(doneId).value = title;
   }
 
   async currentList () {
@@ -55,7 +57,6 @@ class Todo extends Component {
         });
         await Deserializer.fetchPattern('https://tower-rails.herokuapp.com/task_lists/'+listId+'/tasks/'+itemId,'PUT',{content:newTitle})
         var id = this.props.item.id;
-        var doneId = "done"+id+""
         window.$('#'+id+'').collapse('hide');
         document.getElementById(doneId).value = newTitle;
     }
