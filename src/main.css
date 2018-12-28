@@ -30,6 +30,10 @@
 	height: 76vh;
 }
 
+#tcalendar {
+	overflow: hidden;
+}
+
 .default {
 }
 
