@@ -10,6 +10,7 @@ class Todo extends Component {
     this.state = {
        open: false,
        inputClass: "default form-control",
+       todoClass: "list-group-item itemClass",
     };
   }
 
@@ -63,6 +64,9 @@ class Todo extends Component {
   }
 
   async deleteEvent() {
+    this.setState({
+      todoClass: "list-group-item itemClass animated infinite zoomOut"
+    })
     var listId = await this.currentList();
     var items = this.props.parent.state.todos;
     var idx = items.indexOf(this.props.item)
@@ -91,7 +95,7 @@ class Todo extends Component {
             <button onClick={this.closeAlert.bind(this)}>Cancel</button>
           </div>
           <div className="list-group">
-            <li className="list-group-item itemClass">
+            <li className={this.state.todoClass}>
             {this.props.item.title}
             </li>
             <div className="btn-group btn-group-justified">

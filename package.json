@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "animate.css": "^3.7.0",
     "fullcalendar-reactwrapper": "^1.0.7",
     "history": "^4.7.2",
     "react": "^16.6.0",
