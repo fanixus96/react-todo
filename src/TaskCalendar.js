@@ -29,6 +29,7 @@ class TaskCalendar extends Component {
   render() {
     return (
       <FullCalendar
+        height={"parent"}
         events={this.props.events}
         dayClick={this.addEvent.bind(this)}
       />

@@ -26,6 +26,9 @@
   height:68vh;
   overflow-y:auto;
 }
+.calendar-size {
+	height: 76vh;
+}
 
 .default {
 }
@@ -41,8 +44,4 @@
 .no-gutters {
   padding-right:0;
   padding-left:0;
-}
-
-.no-scrollbar {
-	overflow: hidden;
 }

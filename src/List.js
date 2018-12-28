@@ -90,7 +90,6 @@ async currentList () {
         this.setState({
           todos: newTodos
         });
-        
     }
   }
 
@@ -172,7 +171,7 @@ async currentList () {
                   <i className="far fa-calendar-plus"></i>
                 </div>
               </div>
-              <div className="col-md-8 column">
+              <div className="col-md-8 calendar-size">
                 <TaskCalendar events={this.state.todos} parent={self} />
               </div>
             </div>

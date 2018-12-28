@@ -18,7 +18,8 @@ class Todo extends Component {
     var id = this.props.item.id;
     window.$('#'+id+'').collapse('show');
     this.setState({
-     open: true 
+     open: true,
+     todoClass: "list-group-item itemClass animated infinite flash",
    })
   }
 
@@ -30,6 +31,10 @@ class Todo extends Component {
     var doneId = "done"+id+""
     window.$('#'+id+'').collapse('hide');
     document.getElementById(doneId).value = title;
+    this.setState({
+     todoClass: "list-group-item itemClass",
+   })
+
   }
 
   async currentList () {
@@ -56,6 +61,9 @@ class Todo extends Component {
         this.props.parent.setState({
           todos: items
         });
+        this.setState({
+          todoClass: "list-group-item itemClass",
+        })
         await Deserializer.fetchPattern('https://tower-rails.herokuapp.com/task_lists/'+listId+'/tasks/'+itemId,'PUT',{content:newTitle})
         var id = this.props.item.id;
         window.$('#'+id+'').collapse('hide');
