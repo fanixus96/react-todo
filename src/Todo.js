@@ -81,7 +81,7 @@ class Todo extends Component {
     var doneId = "done"+collapseId+""
 
     return (
-        <div className="col"> 
+        <div className="col no-gutters"> 
           <div className="collapse" id={collapseId}>
             <div className="form-group">
               <label>What needs to be done?</label>
@@ -91,7 +91,9 @@ class Todo extends Component {
             <button onClick={this.closeAlert.bind(this)}>Cancel</button>
           </div>
           <div className="list-group">
-            <li className="list-group-item itemClass">{this.props.item.title}</li>
+            <li className="list-group-item itemClass">
+            {this.props.item.title}
+            </li>
             <div className="btn-group btn-group-justified">
             <div className="btn btn-primary col-md-6" onClick={this.openAlert.bind(this)}>Edit</div>
             <div className="btn btn-danger col-md-6" onClick={this.deleteEvent.bind(this)}>Delete</div>

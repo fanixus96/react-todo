@@ -1,4 +1,3 @@
-
 .notDone {
 }
 
@@ -23,10 +22,9 @@
   transform: translate(-50%,-50%);
 }   
 
-
 .column {
   height:68vh;
-  overflow:auto;
+  overflow-y:auto;
 }
 
 .default {
@@ -38,4 +36,13 @@
 
 .itemClass {
 	word-wrap: break-word;
+}
+
+.no-gutters {
+  padding-right:0;
+  padding-left:0;
+}
+
+.no-scrollbar {
+	overflow: hidden;
 }

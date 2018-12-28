@@ -168,7 +168,9 @@ async currentList () {
                     return <Todo parent={self} item={item} key={item.id}/>
                   })}
                 </div>
-                <div type="button" className="btn btn-primary btn-lg btn-block" onClick={this.openAlert.bind(this)}> New </div>
+                <div type="button" className="btn btn-primary btn-lg btn-block" onClick={this.openAlert.bind(this)}>
+                  <i className="far fa-calendar-plus"></i>
+                </div>
               </div>
               <div className="col-md-8 column">
                 <TaskCalendar events={this.state.todos} parent={self} />
